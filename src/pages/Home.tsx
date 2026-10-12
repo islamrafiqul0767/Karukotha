@@ -25,12 +25,18 @@ export const HomePage: React.FC = () => {
     <div>
       {/* HERO SECTION */}
       <section className="relative bg-cream overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 lg:py-32">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 5L55 30L30 55L5 30Z\' stroke=\'%231B4332\' stroke-width=\'0.5\' fill=\'none\'/%3E%3C/svg%3E")', backgroundSize: '60px 60px' }} />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 lg:py-32 relative">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-6">
-              <motion.p variants={fadeUp} className="text-terracotta font-medium text-sm tracking-wide uppercase">
-                {storeSettings.tagline}
-              </motion.p>
+              <motion.div variants={fadeUp} className="flex items-center gap-3">
+                <img src="/assets/brand/karukotha-symbol.svg" alt="" className="w-10 h-10" />
+                <span className="text-terracotta font-medium text-sm tracking-wide uppercase font-latin">
+                  {storeSettings.tagline}
+                </span>
+              </motion.div>
               <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-bold text-forest leading-tight">
                 বাংলার কারুশিল্প,<br />আপনার ঘরে
               </motion.h1>
@@ -97,22 +103,36 @@ export const HomePage: React.FC = () => {
           <p className="text-warm-gray">বাংলার বিভিন্ন ঐতিহ্যবাহী শিল্পের সংগ্রহ</p>
         </motion.div>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.slice(0, 8).map((cat, idx) => (
-            <motion.div key={cat.id} variants={fadeUp}>
-              <Link to={`/category/${cat.slug}`} className="group block">
-                <div className="aspect-square bg-cream rounded-lg overflow-hidden mb-2 relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-forest/5 to-terracotta/5 group-hover:from-forest/10 group-hover:to-terracotta/10 transition-colors" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-4xl">
-                      {idx === 0 ? '🎋' : idx === 1 ? '🏺' : idx === 2 ? '🧶' : idx === 3 ? '🧵' : idx === 4 ? '🪭' : idx === 5 ? '🧶' : idx === 6 ? '🪵' : '📜'}
-                    </span>
+          {categories.slice(0, 8).map((cat, idx) => {
+            const gradients = [
+              'from-amber-100 to-amber-50',
+              'from-orange-100 to-red-50',
+              'from-yellow-100 to-amber-50',
+              'from-green-100 to-emerald-50',
+              'from-stone-100 to-stone-50',
+              'from-pink-50 to-rose-50',
+              'from-amber-200 to-yellow-100',
+              'from-stone-50 to-cream',
+            ];
+            const icons = ['🎋', '🏺', '🧶', '🧵', '🪭', '🧶', '🪵', '📜'];
+            return (
+              <motion.div key={cat.id} variants={fadeUp}>
+                <Link to={`/category/${cat.slug}`} className="group block">
+                  <div className={`aspect-square bg-gradient-to-br ${gradients[idx]} rounded-lg overflow-hidden mb-2 relative border border-light-border/50`}>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-5xl drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        {icons[idx]}
+                      </span>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/80 to-transparent p-2 pt-6">
+                      <p className="text-[10px] text-warm-gray text-center">{cat.productCount}টি পণ্য</p>
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-sm font-medium text-center group-hover:text-forest transition-colors">{cat.nameBn}</h3>
-                <p className="text-xs text-warm-gray text-center">{cat.productCount}টি পণ্য</p>
-              </Link>
-            </motion.div>
-          ))}
+                  <h3 className="text-sm font-medium text-center group-hover:text-forest transition-colors">{cat.nameBn}</h3>
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </section>
 

@@ -207,12 +207,10 @@ export const Header: React.FC = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2" onClick={closeMobileMenu}>
-            <div className="w-8 h-8 bg-forest rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">কা</span>
-            </div>
+            <img src="/assets/brand/karukotha-symbol.svg" alt="কারুকথা Logo" className="w-9 h-9" />
             <div>
               <h1 className="text-lg font-bold text-forest leading-tight">{storeSettings.brandNameBn}</h1>
-              <p className="text-[10px] text-warm-gray leading-tight hidden sm:block">{storeSettings.tagline}</p>
+              <p className="text-[10px] text-warm-gray leading-tight hidden sm:block font-latin tracking-wider uppercase">{storeSettings.tagline}</p>
             </div>
           </Link>
 
@@ -323,7 +321,10 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold mb-3">{storeSettings.brandNameBn}</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <img src="/assets/brand/karukotha-symbol.svg" alt="কারুকথা" className="w-8 h-8" />
+              <h3 className="text-xl font-bold">{storeSettings.brandNameBn}</h3>
+            </div>
             <p className="text-sm text-gray-400 mb-4">{storeSettings.taglineBn}</p>
             <p className="text-sm text-gray-400">ঐতিহ্য, যত্ন আর সৃজনশীলতায় তৈরি অনন্য সব হস্তশিল্প।</p>
           </div>
@@ -347,6 +348,7 @@ export const Footer: React.FC = () => {
               <li><Link to="/faq" className="hover:text-white transition-colors">প্রশ্নোত্তর</Link></li>
               <li><Link to="/shipping" className="hover:text-white transition-colors">ডেলিভারি তথ্য</Link></li>
               <li><Link to="/returns" className="hover:text-white transition-colors">রিটার্ন পলিসি</Link></li>
+              <li><Link to="/order-tracking" className="hover:text-white transition-colors">অর্ডার ট্র্যাকিং</Link></li>
               <li><Link to="/privacy" className="hover:text-white transition-colors">গোপনীয়তা নীতি</Link></li>
               <li><Link to="/terms" className="hover:text-white transition-colors">শর্তাবলী</Link></li>
             </ul>
