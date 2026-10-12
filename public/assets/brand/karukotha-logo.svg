@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" fill="none">
+  <!-- Symbol -->
+  <rect x="5" y="10" width="80" height="80" rx="10" fill="#1B4332"/>
+  <path d="M45 20 L65 50 L45 80 L25 50 Z" stroke="#FAF7F2" stroke-width="1.5" fill="none"/>
+  <path d="M45 27 L58 50 L45 73 L32 50 Z" stroke="#FAF7F2" stroke-width="1" fill="none"/>
+  <path d="M45 33 L52 50 L45 67 L38 50 Z" stroke="#C1440E" stroke-width="1" fill="none"/>
+  <circle cx="45" cy="50" r="3" fill="#C1440E"/>
+  <circle cx="45" cy="50" r="1.5" fill="#FAF7F2"/>
+  <!-- Wordmark -->
+  <text x="100" y="52" font-family="'Hind Siliguri', sans-serif" font-size="32" font-weight="700" fill="#1B4332">কারুকথা</text>
+  <text x="100" y="72" font-family="'Inter', sans-serif" font-size="11" font-weight="400" fill="#8B7E74" letter-spacing="2">HANDCRAFTED IN BANGLADESH</text>
+</svg>

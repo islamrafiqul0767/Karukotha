@@ -24,9 +24,7 @@ export const AdminLoginPage: React.FC = () => {
     <div className="min-h-screen bg-cream flex items-center justify-center px-4">
       <div className="max-w-sm w-full">
         <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-forest rounded-full flex items-center justify-center mx-auto mb-3">
-            <span className="text-white font-bold">কা</span>
-          </div>
+          <img src="/assets/brand/karukotha-symbol.svg" alt="কারুকথা" className="w-12 h-12 mx-auto mb-3" />
           <h1 className="text-xl font-bold text-forest">অ্যাডমিন লগইন</h1>
         </div>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border border-light-border space-y-4">

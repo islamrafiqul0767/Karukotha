@@ -9,6 +9,7 @@ import { BlogPage, BlogPostPage, OffersPage } from './pages/BlogOffers';
 import { AboutPage, ContactPage, FAQPage, ShippingPage, ReturnsPage, PrivacyPage, TermsPage } from './pages/StaticPages';
 import { LoginPage, RegisterPage, AccountPage, WishlistPage } from './pages/Auth';
 import { AdminLoginPage, AdminDashboard } from './pages/Admin';
+import { OrderTrackingPage } from './pages/OrderTracking';
 import { categories, products } from './data';
 import { ProductCard } from './components/ProductComponents';
 
@@ -83,6 +84,7 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/wishlist" element={<WishlistPage />} />
+              <Route path="/order-tracking" element={<OrderTrackingPage />} />
             </Routes>
           </Layout>
         } />

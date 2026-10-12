@@ -125,19 +125,40 @@ export const categories: Category[] = [
 ];
 
 // === PRODUCT IMAGES GENERATOR ===
+// Uses real AI-generated images for products with available assets,
+// and category-appropriate concept placeholders for others.
+// All images are clearly marked as concept/development assets.
+
+const REAL_IMAGES: Record<string, string> = {
+  'p001': 'https://image.qwenlm.ai/generated-images/49fa09d3-0167-4979-b794-9623c67feb5d/_result.png',
+  'p008': 'https://image.qwenlm.ai/generated-images/9cf27221-819c-4e6a-a175-294dbf31a042/_result.png',
+  'p013': 'https://image.qwenlm.ai/generated-images/5d170e81-44cb-454b-8809-835299af83d4/_result.png',
+  'p017': 'https://image.qwenlm.ai/generated-images/7a0bfbc1-80a9-48c2-8545-803d0934953c/_result.png',
+  'p021': 'https://image.qwenlm.ai/generated-images/a43fefe7-ba1a-4d40-ada4-6e8ea6212c5f/_result.png',
+  'p024': 'https://image.qwenlm.ai/generated-images/4b7cbf9e-bfc9-4eb9-a64b-027fa29aa235/_result.png',
+  'p027': 'https://image.qwenlm.ai/generated-images/97a05c40-5c61-4383-9515-e6ac9c0d9dcc/_result.png',
+};
+
 const generateProductImages = (productId: string, nameEn: string, color: string): ProductImage[] => {
   const colors: Record<string, string> = {
-    'bamboo': '#8B7355', 'cane': '#A0826D', 'terracotta': '#C1440E',
-    'clay': '#B87333', 'jute': '#C4A882', 'kantha': '#4A6741',
-    'shital': '#D4C5A9', 'crochet': '#E8D5B7', 'wood': '#6B4226',
-    'paper': '#F5F0E8', 'default': '#8B7E74'
+    'bamboo': '8B7355', 'cane': 'A0826D', 'terracotta': 'C1440E',
+    'clay': 'B87333', 'jute': 'C4A882', 'kantha': '4A6741',
+    'shital': 'D4C5A9', 'crochet': 'E8D5B7', 'wood': '6B4226',
+    'paper': 'F5F0E8', 'default': '8B7E74'
   };
   const bgColor = colors[color] || colors['default'];
+  const textColor = ['paper', 'shital', 'crochet', 'jute'].includes(color) ? '3D3D3D' : 'FFFFFF';
+  
+  // If we have a real image for this product, use it as hero
+  const heroUrl = REAL_IMAGES[productId] || `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn)}&font=roboto`;
+  
   return [
-    { url: `https://placehold.co/800x800/${bgColor.slice(1)}/FFFFFF?text=${encodeURIComponent(nameEn)}+Hero`, alt: `${nameEn} - Hero Shot`, altBn: `${nameEn} - প্রধান ছবি` },
-    { url: `https://placehold.co/800x800/${bgColor.slice(1)}/FFFFFF?text=${encodeURIComponent(nameEn)}+Front`, alt: `${nameEn} - Front View`, altBn: `${nameEn} - সামনের দিক` },
-    { url: `https://placehold.co/800x800/${bgColor.slice(1)}/FFFFFF?text=${encodeURIComponent(nameEn)}+Detail`, alt: `${nameEn} - Detail Shot`, altBn: `${nameEn} - বিস্তারিত` },
-    { url: `https://placehold.co/800x800/${bgColor.slice(1)}/FFFFFF?text=${encodeURIComponent(nameEn)}+Lifestyle`, alt: `${nameEn} - Lifestyle`, altBn: `${nameEn} - লাইফস্টাইল` },
+    { url: heroUrl, alt: `${nameEn} - Hero Shot (Concept)`, altBn: `${nameEn} - প্রধান ছবি` },
+    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Front')}&font=roboto`, alt: `${nameEn} - Front View`, altBn: `${nameEn} - সামনের দিক` },
+    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Detail')}&font=roboto`, alt: `${nameEn} - Detail Shot`, altBn: `${nameEn} - বিস্তারিত` },
+    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Lifestyle')}&font=roboto`, alt: `${nameEn} - Lifestyle`, altBn: `${nameEn} - লাইফস্টাইল` },
+    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Macro')}&font=roboto`, alt: `${nameEn} - Macro Detail`, altBn: `${nameEn} - ম্যাক্রো বিস্তারিত` },
+    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Scale')}&font=roboto`, alt: `${nameEn} - Size Reference`, altBn: `${nameEn} - মাপের রেফারেন্স` },
   ];
 };
 
@@ -552,7 +573,7 @@ export const blogPosts: BlogPost[] = [
     excerptEn: 'Nakshi Kantha is a unique testament to Bengali women\'s creativity. Learn about its history and tradition.',
     contentBn: '<p>নকশি কাঁথা বাংলার গ্রামীণ নারীদের হাতের অসাধারণ সৃষ্টি। পুরনো কাপড়কে নতুন রূপ দেওয়ার এই শিল্পকর্ম শতাব্দী ধরে চলে আসছে...</p>',
     contentEn: '<p>Nakshi Kantha is the extraordinary creation of rural Bengali women. This art of giving old cloth new form has continued for centuries...</p>',
-    featuredImage: 'https://placehold.co/1200x600/4A6741/FFFFFF?text=Nakshi+Kantha', author: 'কারুকথা টিম',
+    featuredImage: 'https://image.qwenlm.ai/generated-images/7a0bfbc1-80a9-48c2-8545-803d0934953c/_result.png', author: 'কারুকথা টিম',
     publishedAt: '2025-01-15', category: 'heritage', tags: ['nakshi-kantha', 'embroidery', 'heritage'],
     isPublished: true, isDemoData: true, relatedProducts: ['p017', 'p018', 'p019', 'p020'],
   },
@@ -563,7 +584,7 @@ export const blogPosts: BlogPost[] = [
     excerptEn: 'Bangladesh has a rich history of bamboo and cane crafts. Learn about this traditional art.',
     contentBn: '<p>বাংলাদেশের গ্রামীণ জনপদে বাঁশ ও বেত শিল্পের দীর্ঘ ঐতিহ্য রয়েছে...</p>',
     contentEn: '<p>Bangladesh\'s rural areas have a long tradition of bamboo and cane crafts...</p>',
-    featuredImage: 'https://placehold.co/1200x600/8B7355/FFFFFF?text=Bamboo+Crafts', author: 'কারুকথা টিম',
+    featuredImage: 'https://image.qwenlm.ai/generated-images/49fa09d3-0167-4979-b794-9623c67feb5d/_result.png', author: 'কারুকথা টিম',
     publishedAt: '2025-01-20', category: 'crafts', tags: ['bamboo', 'cane', 'crafts'],
     isPublished: true, isDemoData: true, relatedProducts: ['p001', 'p002', 'p003'],
   },
@@ -574,7 +595,7 @@ export const blogPosts: BlogPost[] = [
     excerptEn: 'How to properly care for handmade products? Read our complete guide.',
     contentBn: '<p>হাতে তৈরি পণ্য বিশেষ যত্নের দাবি রাখে। সঠিক পরিচর্যা করলে এগুলো দীর্ঘদিন সুন্দর থাকে...</p>',
     contentEn: '<p>Handmade products require special care. With proper maintenance, they remain beautiful for a long time...</p>',
-    featuredImage: 'https://placehold.co/1200x600/6B4226/FFFFFF?text=Craft+Care', author: 'কারুকথা টিম',
+    featuredImage: 'https://image.qwenlm.ai/generated-images/d61b27d1-29e7-4737-934d-3024eff7d869/_result.png', author: 'কারুকথা টিম',
     publishedAt: '2025-02-01', category: 'guides', tags: ['care', 'maintenance', 'tips'],
     isPublished: true, isDemoData: true, relatedProducts: [],
   },
@@ -585,7 +606,7 @@ export const blogPosts: BlogPost[] = [
     excerptEn: 'A special feature on the tradition and current state of Bengal\'s terracotta art.',
     contentBn: '<p>টেরাকোটা বাংলার অন্যতম প্রাচীন শিল্পরূপ...</p>',
     contentEn: '<p>Terracotta is one of Bengal\'s oldest art forms...</p>',
-    featuredImage: 'https://placehold.co/1200x600/C1440E/FFFFFF?text=Terracotta', author: 'কারুকথা টিম',
+    featuredImage: 'https://image.qwenlm.ai/generated-images/9cf27221-819c-4e6a-a175-294dbf31a042/_result.png', author: 'কারুকথা টিম',
     publishedAt: '2025-02-10', category: 'heritage', tags: ['terracotta', 'pottery', 'heritage'],
     isPublished: true, isDemoData: true, relatedProducts: ['p008', 'p009', 'p010', 'p011', 'p012'],
   },
@@ -596,7 +617,7 @@ export const blogPosts: BlogPost[] = [
     excerptEn: 'New possibilities with modern design integration in the jute industry.',
     contentBn: '<p>সোনালি আশ খ্যাত পাট এখন নতুন রূপে ফিরে আসছে...</p>',
     contentEn: '<p>Jute, known as the golden fiber, is returning in new forms...</p>',
-    featuredImage: 'https://placehold.co/1200x600/C4A882/FFFFFF?text=Jute+Crafts', author: 'কারুকথা টিম',
+    featuredImage: 'https://image.qwenlm.ai/generated-images/5d170e81-44cb-454b-8809-835299af83d4/_result.png', author: 'কারুকথা টিম',
     publishedAt: '2025-02-15', category: 'crafts', tags: ['jute', 'sustainable', 'crafts'],
     isPublished: true, isDemoData: true, relatedProducts: ['p013', 'p014', 'p015', 'p016'],
   },
