@@ -231,28 +231,50 @@ export const CheckoutPage: React.FC = () => {
               <h2 className="font-semibold text-lg mb-4">যোগাযোগের তথ্য</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium block mb-1">নাম *</label>
+                  <label htmlFor="checkout-name" className="text-sm font-medium block mb-1">
+                    নাম <span className="text-terracotta" aria-hidden="true">*</span>
+                  </label>
                   <input
-                    type="text" value={form.name} onChange={e => updateField('name', e.target.value)}
-                    className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-forest ${errors.name ? 'border-terracotta' : 'border-light-border'}`}
+                    id="checkout-name"
+                    type="text" 
+                    value={form.name} 
+                    onChange={e => updateField('name', e.target.value)}
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? 'name-error' : undefined}
+                    className={`w-full px-3 py-2.5 border rounded focus:outline-none focus:border-forest min-h-[44px] ${errors.name ? 'border-terracotta' : 'border-light-border'}`}
                     placeholder="আপনার পূর্ণ নাম"
                   />
-                  {errors.name && <p className="text-xs text-terracotta mt-1">{errors.name}</p>}
+                  {errors.name && <p id="name-error" className="text-xs text-terracotta mt-1" role="alert">{errors.name}</p>}
                 </div>
                 <div>
-                  <label className="text-sm font-medium block mb-1">ফোন নম্বর *</label>
+                  <label htmlFor="checkout-phone" className="text-sm font-medium block mb-1">
+                    ফোন নম্বর <span className="text-terracotta" aria-hidden="true">*</span>
+                  </label>
                   <input
-                    type="tel" value={form.phone} onChange={e => updateField('phone', e.target.value)}
-                    className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-forest ${errors.phone ? 'border-terracotta' : 'border-light-border'}`}
+                    id="checkout-phone"
+                    type="tel" 
+                    value={form.phone} 
+                    onChange={e => updateField('phone', e.target.value)}
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.phone}
+                    aria-describedby={errors.phone ? 'phone-error' : undefined}
+                    pattern="01[3-9][0-9]{8}"
+                    className={`w-full px-3 py-2.5 border rounded focus:outline-none focus:border-forest min-h-[44px] ${errors.phone ? 'border-terracotta' : 'border-light-border'}`}
                     placeholder="01XXXXXXXXX"
                   />
-                  {errors.phone && <p className="text-xs text-terracotta mt-1">{errors.phone}</p>}
+                  {errors.phone && <p id="phone-error" className="text-xs text-terracotta mt-1" role="alert">{errors.phone}</p>}
                 </div>
                 <div className="md:col-span-2">
-                  <label className="text-sm font-medium block mb-1">ইমেইল (ঐচ্ছিক)</label>
+                  <label htmlFor="checkout-email" className="text-sm font-medium block mb-1">ইমেইল (ঐচ্ছিক)</label>
                   <input
-                    type="email" value={form.email} onChange={e => updateField('email', e.target.value)}
-                    className="w-full px-3 py-2 border border-light-border rounded focus:outline-none focus:border-forest"
+                    id="checkout-email"
+                    type="email" 
+                    value={form.email} 
+                    onChange={e => updateField('email', e.target.value)}
+                    className="w-full px-3 py-2.5 border border-light-border rounded focus:outline-none focus:border-forest min-h-[44px]"
                     placeholder="email@example.com"
                   />
                 </div>
@@ -264,45 +286,77 @@ export const CheckoutPage: React.FC = () => {
               <h2 className="font-semibold text-lg mb-4">ডেলিভারি ঠিকানা</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium block mb-1">বিভাগ *</label>
-                  <select value={form.division} onChange={e => updateField('division', e.target.value)} className="w-full px-3 py-2 border border-light-border rounded focus:outline-none focus:border-forest">
+                  <label htmlFor="checkout-division" className="text-sm font-medium block mb-1">
+                    বিভাগ <span className="text-terracotta" aria-hidden="true">*</span>
+                  </label>
+                  <select 
+                    id="checkout-division"
+                    value={form.division} 
+                    onChange={e => updateField('division', e.target.value)}
+                    required
+                    aria-required="true"
+                    className="w-full px-3 py-2.5 border border-light-border rounded focus:outline-none focus:border-forest min-h-[44px]"
+                  >
+                    <option value="">বিভাগ নির্বাচন করুন</option>
                     <option>ঢাকা</option><option>চট্টগ্রাম</option><option>রাজশাহী</option><option>খুলনা</option>
                     <option>বরিশাল</option><option>সিলেট</option><option>রংপুর</option><option>ময়মনসিংহ</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium block mb-1">জেলা *</label>
+                  <label htmlFor="checkout-district" className="text-sm font-medium block mb-1">
+                    জেলা <span className="text-terracotta" aria-hidden="true">*</span>
+                  </label>
                   <input
-                    type="text" value={form.district} onChange={e => updateField('district', e.target.value)}
-                    className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-forest ${errors.district ? 'border-terracotta' : 'border-light-border'}`}
+                    id="checkout-district"
+                    type="text" 
+                    value={form.district} 
+                    onChange={e => updateField('district', e.target.value)}
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.district}
+                    aria-describedby={errors.district ? 'district-error' : undefined}
+                    className={`w-full px-3 py-2.5 border rounded focus:outline-none focus:border-forest min-h-[44px] ${errors.district ? 'border-terracotta' : 'border-light-border'}`}
                     placeholder="জেলা"
                   />
-                  {errors.district && <p className="text-xs text-terracotta mt-1">{errors.district}</p>}
+                  {errors.district && <p id="district-error" className="text-xs text-terracotta mt-1" role="alert">{errors.district}</p>}
                 </div>
                 <div>
-                  <label className="text-sm font-medium block mb-1">উপজেলা/থানা</label>
+                  <label htmlFor="checkout-upazila" className="text-sm font-medium block mb-1">উপজেলা/থানা</label>
                   <input
-                    type="text" value={form.upazila} onChange={e => updateField('upazila', e.target.value)}
-                    className="w-full px-3 py-2 border border-light-border rounded focus:outline-none focus:border-forest"
+                    id="checkout-upazila"
+                    type="text" 
+                    value={form.upazila} 
+                    onChange={e => updateField('upazila', e.target.value)}
+                    className="w-full px-3 py-2.5 border border-light-border rounded focus:outline-none focus:border-forest min-h-[44px]"
                     placeholder="উপজেলা/থানা"
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="text-sm font-medium block mb-1">সম্পূর্ণ ঠিকানা *</label>
+                  <label htmlFor="checkout-address" className="text-sm font-medium block mb-1">
+                    সম্পূর্ণ ঠিকানা <span className="text-terracotta" aria-hidden="true">*</span>
+                  </label>
                   <textarea
-                    value={form.address} onChange={e => updateField('address', e.target.value)}
+                    id="checkout-address"
+                    value={form.address} 
+                    onChange={e => updateField('address', e.target.value)}
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.address}
+                    aria-describedby={errors.address ? 'address-error' : undefined}
                     rows={3}
-                    className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-forest ${errors.address ? 'border-terracotta' : 'border-light-border'}`}
+                    className={`w-full px-3 py-2.5 border rounded focus:outline-none focus:border-forest ${errors.address ? 'border-terracotta' : 'border-light-border'}`}
                     placeholder="বাড়ি নং, রাস্তা, এলাকা"
                   />
-                  {errors.address && <p className="text-xs text-terracotta mt-1">{errors.address}</p>}
+                  {errors.address && <p id="address-error" className="text-xs text-terracotta mt-1" role="alert">{errors.address}</p>}
                 </div>
                 <div className="md:col-span-2">
-                  <label className="text-sm font-medium block mb-1">অর্ডার নোট (ঐচ্ছিক)</label>
+                  <label htmlFor="checkout-notes" className="text-sm font-medium block mb-1">অর্ডার নোট (ঐচ্ছিক)</label>
                   <textarea
-                    value={form.orderNotes} onChange={e => updateField('orderNotes', e.target.value)}
+                    id="checkout-notes"
+                    value={form.orderNotes} 
+                    onChange={e => updateField('orderNotes', e.target.value)}
                     rows={2}
-                    className="w-full px-3 py-2 border border-light-border rounded focus:outline-none focus:border-forest"
+                    className="w-full px-3 py-2.5 border border-light-border rounded focus:outline-none focus:border-forest"
                     placeholder="বিশেষ নির্দেশনা থাকলে লিখুন"
                   />
                 </div>
@@ -314,16 +368,28 @@ export const CheckoutPage: React.FC = () => {
               <h2 className="font-semibold text-lg mb-4">পেমেন্ট পদ্ধতি</h2>
               <div className="space-y-3">
                 {[
-                  { id: 'cod', label: 'ক্যাশ অন ডেলিভারি', desc: 'পণ্য হাতে পেয়ে টাকা দিন' },
-                  { id: 'bkash', label: 'বিকাশ', desc: 'বিকাশ পেমেন্ট (শীঘ্রই আসছে)' },
-                  { id: 'nagad', label: 'নগদ', desc: 'নগদ পেমেন্ট (শীঘ্রই আসছে)' },
-                  { id: 'sslcommerz', label: 'অনলাইন পেমেন্ট', desc: 'SSLCommerz (কনফিগারেশন প্রয়োজন)' },
+                  { id: 'cod', label: 'ক্যাশ অন ডেলিভারি', desc: 'পণ্য হাতে পেয়ে টাকা দিন', available: true },
+                  { id: 'bkash', label: 'বিকাশ', desc: 'বর্তমানে চালু নয় — শীঘ্রই আসছে', available: false },
+                  { id: 'nagad', label: 'নগদ', desc: 'বর্তমানে চালু নয় — শীঘ্রই আসছে', available: false },
+                  { id: 'sslcommerz', label: 'অনলাইন পেমেন্ট', desc: 'বর্তমানে চালু নয় — কনফিগারেশন প্রয়োজন', available: false },
                 ].map(method => (
-                  <label key={method.id} className={`flex items-start gap-3 p-3 border rounded cursor-pointer transition-colors ${form.paymentMethod === method.id ? 'border-forest bg-forest/5' : 'border-light-border hover:border-forest/50'}`}>
+                  <label 
+                    key={method.id} 
+                    className={`flex items-start gap-3 p-3 border rounded transition-colors ${
+                      !method.available 
+                        ? 'border-light-border bg-gray-50 opacity-60 cursor-not-allowed' 
+                        : form.paymentMethod === method.id 
+                          ? 'border-forest bg-forest/5 cursor-pointer' 
+                          : 'border-light-border hover:border-forest/50 cursor-pointer'
+                    }`}
+                  >
                     <input
-                      type="radio" name="payment" value={method.id}
+                      type="radio" 
+                      name="payment" 
+                      value={method.id}
                       checked={form.paymentMethod === method.id}
                       onChange={e => updateField('paymentMethod', e.target.value)}
+                      disabled={!method.available}
                       className="mt-0.5 accent-forest"
                     />
                     <div>

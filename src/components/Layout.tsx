@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Search, Heart, Menu, X, User, ChevronDown, MapPin, Phone, Mail } from 'lucide-react';
+import { ShoppingBag, Search, Heart, Menu, X, User, ChevronDown, MapPin, Phone, Mail, Check } from 'lucide-react';
 import { useCartStore, useWishlistStore, useUIStore, useAuthStore } from '../store';
 import { storeSettings, categories } from '../data';
 
@@ -9,23 +9,39 @@ import { storeSettings, categories } from '../data';
 export const ToastContainer: React.FC = () => {
   const { toasts, removeToast } = useUIStore();
   return (
-    <div className="fixed top-20 right-4 z-[100] flex flex-col gap-2">
-      <AnimatePresence>
+    <div 
+      className="fixed top-20 right-4 z-[100] flex flex-col gap-2 max-w-[280px] pointer-events-none"
+      aria-live="polite"
+      aria-atomic="false"
+    >
+      <AnimatePresence mode="popLayout">
         {toasts.map(toast => (
           <motion.div
             key={toast.id}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            className={`px-4 py-3 rounded shadow-lg text-sm max-w-xs ${
+            initial={{ opacity: 0, x: 40, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 40, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className={`pointer-events-auto px-4 py-3 rounded-lg shadow-lg text-sm ${
               toast.type === 'success' ? 'bg-forest text-white' :
               toast.type === 'error' ? 'bg-terracotta text-white' :
               'bg-charcoal text-white'
             }`}
+            role="status"
           >
-            <div className="flex items-center justify-between gap-2">
-              <span>{toast.message}</span>
-              <button onClick={() => removeToast(toast.id)} className="text-white/80 hover:text-white">
+            <div className="flex items-center gap-2">
+              {toast.type === 'success' && <Check size={14} className="flex-shrink-0" />}
+              <span className="flex-1">
+                {toast.message}
+                {(toast.count || 0) > 1 && (
+                  <span className="ml-1 font-semibold">×{toast.count}</span>
+                )}
+              </span>
+              <button 
+                onClick={() => removeToast(toast.id)} 
+                className="flex-shrink-0 p-1 -mr-1 text-white/80 hover:text-white rounded min-w-[28px] min-h-[28px] flex items-center justify-center"
+                aria-label="বন্ধ করুন"
+              >
                 <X size={14} />
               </button>
             </div>
@@ -39,60 +55,158 @@ export const ToastContainer: React.FC = () => {
 // === CART DRAWER ===
 export const CartDrawer: React.FC = () => {
   const { isCartOpen, closeCart } = useUIStore();
-  const { items, removeItem, updateQuantity, getSubtotal } = useCartStore();
+  const { items, removeItem, updateQuantity, getSubtotal, getItemCount } = useCartStore();
   const navigate = useNavigate();
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Focus trap and keyboard handling
+  useEffect(() => {
+    if (isCartOpen) {
+      // Lock body scroll
+      document.body.style.overflow = 'hidden';
+      // Focus close button when drawer opens
+      setTimeout(() => closeButtonRef.current?.focus(), 100);
+      
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          closeCart();
+        }
+        // Focus trap
+        if (e.key === 'Tab' && drawerRef.current) {
+          const focusableElements = drawerRef.current.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          const firstElement = focusableElements[0] as HTMLElement;
+          const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+          
+          if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      };
+      
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = '';
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isCartOpen, closeCart]);
+
+  const totalItems = getItemCount();
+  const distinctItems = items.length;
 
   return (
     <AnimatePresence>
       {isCartOpen && (
         <>
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 bg-black/40 z-50"
             onClick={closeCart}
+            aria-hidden="true"
           />
+          {/* Drawer */}
           <motion.div
+            ref={drawerRef}
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-ivory z-50 shadow-2xl flex flex-col"
+            transition={{ type: 'tween', duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed top-0 right-0 h-full w-full sm:w-[400px] max-w-full bg-ivory z-50 shadow-2xl flex flex-col"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cart-drawer-title"
           >
-            <div className="flex items-center justify-between p-4 border-b border-light-border">
-              <h2 className="text-lg font-semibold text-forest">শপিং ব্যাগ ({items.length})</h2>
-              <button onClick={closeCart} className="p-2 hover:bg-cream rounded"><X size={20} /></button>
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-light-border flex-shrink-0">
+              <h2 id="cart-drawer-title" className="text-lg font-semibold text-forest">
+                শপিং ব্যাগ 
+                <span className="text-warm-gray font-normal text-sm ml-1">
+                  ({distinctItems}টি পণ্য, মোট {totalItems}টি)
+                </span>
+              </h2>
+              <button 
+                ref={closeButtonRef}
+                onClick={closeCart} 
+                className="p-2 hover:bg-cream rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="কার্ট বন্ধ করুন"
+              >
+                <X size={20} />
+              </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-4">
+            
+            {/* Cart Items */}
+            <div className="flex-1 overflow-y-auto p-4 overscroll-contain">
               {items.length === 0 ? (
                 <div className="text-center py-12">
                   <ShoppingBag size={48} className="mx-auto text-warm-gray mb-4" />
-                  <p className="text-warm-gray">আপনার ব্যাগ খালি</p>
-                  <button onClick={() => { closeCart(); navigate('/shop'); }} className="mt-4 text-forest underline">
+                  <p className="text-warm-gray mb-4">আপনার ব্যাগ খালি</p>
+                  <button 
+                    onClick={() => { closeCart(); navigate('/shop'); }} 
+                    className="bg-forest text-white px-6 py-3 rounded font-medium hover:bg-forest-light transition-colors min-h-[44px]"
+                  >
                     শপ দেখুন
                   </button>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {items.map((item, idx) => (
-                    <div key={`${item.product.id}-${item.variant?.id}-${idx}`} className="flex gap-3 bg-white p-3 rounded border border-light-border">
-                      <img src={item.product.images[0]?.url} alt={item.product.nameBn} className="w-16 h-16 object-cover rounded" />
+                    <div key={`${item.product.id}-${item.variant?.id}-${idx}`} className="flex gap-3 bg-white p-3 rounded-lg border border-light-border">
+                      <img 
+                        src={item.product.images[0]?.url || '/assets/brand/image-pending.svg'} 
+                        alt={item.product.nameBn} 
+                        className="w-16 h-16 object-cover rounded flex-shrink-0"
+                        onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
+                      />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium line-clamp-2">{item.product.nameBn}</p>
-                        {item.variant && <p className="text-xs text-warm-gray">{item.variant.nameBn}</p>}
+                        {item.variant && <p className="text-xs text-warm-gray mt-0.5">{item.variant.nameBn}</p>}
                         <div className="flex items-center justify-between mt-2">
                           <div className="flex items-center border border-light-border rounded">
-                            <button onClick={() => updateQuantity(item.product.id, item.variant?.id || null, item.quantity - 1)} className="px-2 py-1 text-sm">−</button>
-                            <span className="px-2 text-sm">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.product.id, item.variant?.id || null, item.quantity + 1)} className="px-2 py-1 text-sm">+</button>
+                            <button 
+                              onClick={() => {
+                                if (item.quantity === 1) {
+                                  removeItem(item.product.id, item.variant?.id || null);
+                                } else {
+                                  updateQuantity(item.product.id, item.variant?.id || null, item.quantity - 1);
+                                }
+                              }} 
+                              className="px-2 py-1 text-sm min-w-[32px] min-h-[32px] flex items-center justify-center hover:bg-cream"
+                              aria-label={item.quantity === 1 ? "পণ্যটি সরান" : "পরিমাণ কমান"}
+                            >
+                              −
+                            </button>
+                            <span className="px-2 text-sm min-w-[24px] text-center">{item.quantity}</span>
+                            <button 
+                              onClick={() => updateQuantity(item.product.id, item.variant?.id || null, item.quantity + 1)} 
+                              className="px-2 py-1 text-sm min-w-[32px] min-h-[32px] flex items-center justify-center hover:bg-cream"
+                              aria-label="পরিমাণ বাড়ান"
+                            >
+                              +
+                            </button>
                           </div>
                           <p className="text-sm font-semibold text-forest">
                             ৳{((item.product.price + (item.variant?.priceModifier || 0)) * item.quantity).toLocaleString()}
                           </p>
                         </div>
                       </div>
-                      <button onClick={() => removeItem(item.product.id, item.variant?.id || null)} className="text-warm-gray hover:text-terracotta self-start">
+                      <button 
+                        onClick={() => removeItem(item.product.id, item.variant?.id || null)} 
+                        className="text-warm-gray hover:text-terracotta self-start p-1 min-w-[32px] min-h-[32px] flex items-center justify-center"
+                        aria-label={`${item.product.nameBn} সরান`}
+                      >
                         <X size={16} />
                       </button>
                     </div>
@@ -100,20 +214,25 @@ export const CartDrawer: React.FC = () => {
                 </div>
               )}
             </div>
+            
+            {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-light-border p-4">
+              <div className="border-t border-light-border p-4 flex-shrink-0 bg-ivory">
                 <div className="flex justify-between mb-3">
                   <span>সাবটোটাল</span>
                   <span className="font-semibold">৳{getSubtotal().toLocaleString()}</span>
                 </div>
                 <button
                   onClick={() => { closeCart(); navigate('/checkout'); }}
-                  className="w-full bg-forest text-white py-3 rounded font-medium hover:bg-forest-light transition-colors"
+                  className="w-full bg-forest text-white py-3 rounded font-medium hover:bg-forest-light transition-colors min-h-[48px]"
                 >
                   চেকআউট করুন
                 </button>
-                <button onClick={() => { closeCart(); navigate('/cart'); }} className="w-full mt-2 border border-forest text-forest py-2 rounded font-medium hover:bg-cream transition-colors">
-                  ব্যাগ দেখুন
+                <button 
+                  onClick={() => { closeCart(); navigate('/cart'); }} 
+                  className="w-full mt-2 border border-forest text-forest py-2.5 rounded font-medium hover:bg-cream transition-colors min-h-[44px]"
+                >
+                  সম্পূর্ণ ব্যাগ দেখুন
                 </button>
               </div>
             )}
