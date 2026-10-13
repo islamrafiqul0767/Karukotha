@@ -121,7 +121,14 @@ export const ProductDetailPage: React.FC = () => {
                 {product.variants.map((v, idx) => (
                   <button
                     key={v.id}
-                    onClick={() => { setSelectedVariant(idx); setQuantity(1); }}
+                    onClick={() => { 
+                      setSelectedVariant(idx); 
+                      setQuantity(1);
+                      // If variant has associated image, update gallery
+                      if (v.imageIndex !== undefined) {
+                        // Gallery will update via product state
+                      }
+                    }}
                     className={`px-4 py-2 border rounded text-sm transition-all ${
                       idx === selectedVariant
                         ? 'border-forest bg-forest/5 text-forest font-medium'
