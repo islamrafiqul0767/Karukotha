@@ -133,71 +133,80 @@ export const categories: Category[] = [
 const UNSPLASH_BASE = 'https://images.unsplash.com';
 const IMG_PARAMS = '?w=800&h=800&fit=crop&auto=format&q=80';
 
+// IMPORTANT: These are Unsplash reference images for development preview ONLY.
+// They are NOT actual product photos. Real photoshoot required before production.
+// Duplicate/mismatched URLs have been removed. Products without verified photos show "image-pending.svg".
+
 const REAL_IMAGES: Record<string, string> = {
-  // Bamboo & Cane
-  'p001': `${UNSPLASH_BASE}/photo-1601330862030-1e08c703ac04${IMG_PARAMS}`, // woven baskets
-  'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // wicker basket
-  'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // round basket
-  'p004': `${UNSPLASH_BASE}/photo-1513519245088-0e12902e35ca${IMG_PARAMS}`, // bamboo lamp
-  'p005': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // desk organizer
-  'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // basket lot
-  'p007': `${UNSPLASH_BASE}/photo-1586802005224-03286636cbca${IMG_PARAMS}`, // basket with flowers
+  // Bamboo & Cane - Each URL used ONCE only
+  'p001': `${UNSPLASH_BASE}/photo-1601330862030-1e08c703ac04${IMG_PARAMS}`, // cane basket (unique)
+  'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // laundry basket (unique)
+  'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // serving tray (unique)
+  // p004, p005, p006, p007 - awaiting real photoshoot
+  'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // hand fan (unique)
   
-  // Pottery
-  'p008': `${UNSPLASH_BASE}/photo-1493106819501-66d381c466f1${IMG_PARAMS}`, // terracotta pot
-  'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // decorative pot
-  'p010': `${UNSPLASH_BASE}/photo-1556909114-f6e7ad7d3136${IMG_PARAMS}`, // tea cups
-  'p011': `${UNSPLASH_BASE}/photo-1602874801006-e26c0477f4d1${IMG_PARAMS}`, // candle holder
-  'p012': `${UNSPLASH_BASE}/photo-1584622650111-993a426fbf0a${IMG_PARAMS}`, // clay vase
+  // Pottery - Each URL used ONCE only
+  'p008': `${UNSPLASH_BASE}/photo-1493106819501-66d381c466f1${IMG_PARAMS}`, // plant pot (unique)
+  'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // shokher hari (unique)
+  'p010': `${UNSPLASH_BASE}/photo-1556909114-f6e7ad7d3136${IMG_PARAMS}`, // tea cups (unique)
+  'p011': `${UNSPLASH_BASE}/photo-1602874801006-e26c0477f4d1${IMG_PARAMS}`, // candle holder (unique)
+  'p012': `${UNSPLASH_BASE}/photo-1584622650111-993a426fbf0a${IMG_PARAMS}`, // clay vase (unique)
   
-  // Jute
-  'p013': `${UNSPLASH_BASE}/photo-1590736969955-71cc94901144${IMG_PARAMS}`, // jute bag
-  'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag
-  'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter
-  'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner
+  // Jute - Each URL used ONCE only
+  'p013': `${UNSPLASH_BASE}/photo-1590736969955-71cc94901144${IMG_PARAMS}`, // jute tote (unique)
+  'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag (unique)
+  'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter (unique)
+  'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner (unique)
   
-  // Nakshi Kantha
-  'p017': `${UNSPLASH_BASE}/photo-1606107557195-0e29a497b413${IMG_PARAMS}`, // embroidered cushion
-  'p018': `${UNSPLASH_BASE}/photo-1620799139507-2a76f79a2f4d${IMG_PARAMS}`, // bed runner
-  'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // tote bag
-  'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch
+  // Nakshi Kantha - Each URL used ONCE only
+  'p017': `${UNSPLASH_BASE}/photo-1606107557195-0e29a497b413${IMG_PARAMS}`, // cushion cover (unique)
+  'p018': `${UNSPLASH_BASE}/photo-1620799139507-2a76f79a2f4d${IMG_PARAMS}`, // bed runner (unique)
+  'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // kantha tote (unique)
+  'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch (unique)
   
-  // Shital Pati
-  'p021': `${UNSPLASH_BASE}/photo-1631679706909-1844bbd6dae1${IMG_PARAMS}`, // mat
-  'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat
-  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // tote
+  // Shital Pati - Each URL used ONCE only
+  'p021': `${UNSPLASH_BASE}/photo-1631679706909-1844bbd6dae1${IMG_PARAMS}`, // floor mat (unique)
+  'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat (unique)
+  // p023 - awaiting real photoshoot (was duplicate of p005)
   
-  // Crochet
-  'p024': `${UNSPLASH_BASE}/photo-1622957461168-2c2c7a5a5d8f${IMG_PARAMS}`, // coasters
-  'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger
+  // Crochet - Each URL used ONCE only
+  'p024': `${UNSPLASH_BASE}/photo-1622957461168-2c2c7a5a5d8f${IMG_PARAMS}`, // coasters (unique)
+  'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger (unique)
   
-  // Wood & Folk
-  'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray
-  'p027': `${UNSPLASH_BASE}/photo-1606760227091-3dd870d97f1d${IMG_PARAMS}`, // jewelry box
-  'p028': `${UNSPLASH_BASE}/photo-1513519245088-0e12902e35ca${IMG_PARAMS}`, // wall decor
+  // Wood & Folk - Each URL used ONCE only
+  'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray (unique)
+  'p027': `${UNSPLASH_BASE}/photo-1606760227091-3dd870d97f1d${IMG_PARAMS}`, // jewelry box (unique)
+  // p028 - awaiting real photoshoot
   
-  // Paper & Gifts
-  'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal
-  'p030': `${UNSPLASH_BASE}/photo-1513475382585-d06e58bcb0e0${IMG_PARAMS}`, // greeting cards
+  // Paper & Gifts - Each URL used ONCE only
+  'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal (unique)
+  'p030': `${UNSPLASH_BASE}/photo-1513475382585-d06e58bcb0e0${IMG_PARAMS}`, // greeting cards (unique)
 };
 
-// Branded fallback SVG for products without images
+// Products awaiting real photoshoot - will show image-pending.svg
+const PENDING_PHOTOSHOOT = ['p004', 'p005', 'p007', 'p023', 'p028'];
+
+// Branded fallback SVG for products without verified photos
 const BRANDED_FALLBACK = '/assets/brand/image-pending.svg';
 
+// IMPORTANT: This function generates image arrays for development preview.
+// Products in PENDING_PHOTOSHOOT show only the "image pending" placeholder.
+// Products with REAL_IMAGES show 1 reference photo only (NOT 3-6 distinct photos).
+// Real photoshoot with 6+ distinct angles per SKU required before production.
 const generateProductImages = (productId: string, nameEn: string, _color: string): ProductImage[] => {
-  // Use real Unsplash image if available
+  // If product is awaiting photoshoot, show ONLY the pending placeholder
+  if (PENDING_PHOTOSHOOT.includes(productId)) {
+    return [
+      { url: BRANDED_FALLBACK, alt: `${nameEn} - ছবি শীঘ্রই যোগ হবে`, altBn: `${nameEn} - ছবি শীঘ্রই যোগ হবে` },
+    ];
+  }
+  
+  // For products with reference images, show ONLY that single image
+  // (Not multiple crops of the same image pretending to be different angles)
   const heroUrl = REAL_IMAGES[productId] || BRANDED_FALLBACK;
   
-  // For additional gallery images, use the same hero image with different crop parameters
-  // In production, these would be separate product photos
-  const additionalImages = REAL_IMAGES[productId] ? [
-    { url: `${REAL_IMAGES[productId].split('?')[0]}?w=800&h=800&fit=crop&crop=center&auto=format&q=80`, alt: `${nameEn} - Front View`, altBn: `${nameEn} - সামনের দিক` },
-    { url: `${REAL_IMAGES[productId].split('?')[0]}?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80`, alt: `${nameEn} - Detail Shot`, altBn: `${nameEn} - বিস্তারিত` },
-  ] : [];
-  
   return [
-    { url: heroUrl, alt: `${nameEn}`, altBn: `${nameEn}` },
-    ...additionalImages,
+    { url: heroUrl, alt: `${nameEn} - প্রাথমিক ছবি (রেফারেন্স)`, altBn: `${nameEn} - প্রাথমিক ছবি (রেফারেন্স)` },
   ];
 };
 
@@ -703,6 +712,87 @@ export const storeSettings: StoreSettings = {
     { name: 'ঢাকা বিভাগ (সিটি ছাড়া)', fee: 100 },
     { name: 'অন্যান্য বিভাগ', fee: 130 },
   ],
+};
+
+// === BENGALI TRANSLATION MAPS ===
+// Consistent Bengali labels for materials, dimensions, weight, and craft techniques
+const MATERIAL_BN: Record<string, string> = {
+  'Natural Cane': 'প্রাকৃতিক বেত',
+  'Natural Bamboo': 'প্রাকৃতিক বাঁশ',
+  'Natural Bamboo Strips': 'প্রাকৃতিক বাঁশের ফালি',
+  'Natural Clay': 'প্রাকৃতিক মাটি',
+  'Natural Jute': 'প্রাকৃতিক পাট',
+  'Cotton Fabric': 'সুতি কাপড়',
+  'Cotton Thread': 'সুতি সুতা',
+  'Cotton Lining': 'সুতি আস্তরণ',
+  'Cotton Liner': 'সুতি আস্তরণ',
+  'Cotton Handles': 'সুতি হাতল',
+  'Cotton Backing': 'সুতি পশ্চাৎভাগ',
+  'Cotton Border': 'সুতি পাড়',
+  'Cotton Yarn': 'সুতি সুতা',
+  'Cotton Rope': 'সুতি দড়ি',
+  'Madur Grass': 'মাদুর ঘাস',
+  'Mahogany Wood': 'মেহগনি কাঠ',
+  'Sheesham Wood': 'শিশু কাঠ',
+  'Wood Frame': 'কাঠের ফ্রেম',
+  'Recycled Paper': 'পুনর্ব্যবহৃত কাগজ',
+  'Handmade Paper': 'হাতে তৈরি কাগজ',
+  'Food-safe Lacquer': 'খাদ্য-নিরাপদ ল্যাকার',
+  'Food-safe Glaze': 'খাদ্য-নিরাপদ গ্লেজ',
+  'Food-safe Oil Finish': 'খাদ্য-নিরাপদ তৈল প্রলেপ',
+  'Natural Glaze': 'প্রাকৃতিক গ্লেজ',
+  'Natural Pigments': 'প্রাকৃতিক রং',
+  'Traditional Paint': 'ঐতিহ্যবাহী রং',
+  'Natural Ink': 'প্রাকৃতিক কালি',
+  'Metal Frame': 'ধাতব ফ্রেম',
+  'Brass Hinges': 'পিতলের কব্জা',
+  'Embroidery Thread': 'এমব্রয়ডারি সুতা',
+  'Reinforced Stitching': 'মজবুত সেলাই',
+  'Hand-painted Canvas': 'হাতে আঁকা ক্যানভাস',
+  'Cotton Thread Binding': 'সুতা দিয়ে বাঁধাই',
+  'Handmade Cover': 'হাতে তৈরি মলাট',
+};
+
+const CRAFT_BN: Record<string, string> = {
+  'Handweaving': 'হাতে বোনাই',
+  'Bamboo Weaving': 'বাঁশ বোনাই',
+  'Cane Weaving': 'বেত বোনাই',
+  'Bamboo Craft': 'বাঁশ শিল্প',
+  'Fan Weaving': 'পাখা বোনাই',
+  'Pottery': 'মৃৎশিল্প',
+  'Traditional Pottery': 'ঐতিহ্যবাহী মৃৎশিল্প',
+  'Hand Painting': 'হাতে আঁকা',
+  'Wheel Throwing': 'চাকে গড়া',
+  'Jute Weaving': 'পাট বোনাই',
+  'Jute Craft': 'পাট শিল্প',
+  'Kantha Stitching': 'কাঁথা সেলাই',
+  'Hand Embroidery': 'হাতে এমব্রয়ডারি',
+  'Shital Pati Weaving': 'শীতলপাটি বোনাই',
+  'Crochet': 'ক্রোশিয়া',
+  'Macrame Crochet': 'ম্যাক্রামে ক্রোশিয়া',
+  'Wood Carving': 'কাঠ খোদাই',
+  'Wood Craft': 'কাঠ শিল্প',
+  'Folk Painting': 'লোকচিত্রকলা',
+  'Paper Making': 'কাগজ তৈরি',
+};
+
+// Helper to translate material array to Bengali
+export const translateMaterialsBn = (materials: string[]): string => {
+  return materials.map(m => MATERIAL_BN[m] || m).join(', ');
+};
+
+export const translateCraftBn = (craft: string): string => {
+  return CRAFT_BN[craft] || craft;
+};
+
+// Format dimensions in Bengali
+export const formatDimensionsBn = (dim: string): string => {
+  return dim.replace(/cm/g, 'সেমি').replace(/diameter/g, 'ব্যাস').replace(/height/g, 'উচ্চতা').replace(/length/g, 'দৈর্ঘ্য').replace(/each/g, 'প্রতিটি').replace(/set/g, 'সেট');
+};
+
+// Format weight in Bengali
+export const formatWeightBn = (wt: string): string => {
+  return wt.replace(/g\b/g, 'গ্রাম').replace(/kg\b/g, 'কেজি');
 };
 
 // === HELPER FUNCTIONS ===

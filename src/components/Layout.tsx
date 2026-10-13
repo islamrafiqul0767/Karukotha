@@ -359,7 +359,7 @@ export const Footer: React.FC = () => {
             <h4 className="font-semibold mb-3">যোগাযোগ</h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li className="flex items-center gap-2"><Mail size={14} /> {storeSettings.contactEmail}</li>
-              <li className="flex items-center gap-2"><Phone size={14} /> {storeSettings.contactPhone}</li>
+              <li className="flex items-center gap-2"><Phone size={14} /> যোগাযোগের তথ্য শীঘ্রই</li>
               <li className="flex items-center gap-2"><MapPin size={14} /> ঢাকা, বাংলাদেশ</li>
             </ul>
             <div className="mt-4">

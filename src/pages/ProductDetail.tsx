@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Minus, Plus, Truck, RotateCcw, Shield, Star, ChevronRight } from 'lucide-react';
 import { ProductGallery, ProductCard } from '../components/ProductComponents';
-import { getProductBySlug, getProductsByCategory, categories, formatPrice } from '../data';
+import { getProductBySlug, getProductsByCategory, categories, formatPrice, translateMaterialsBn, translateCraftBn, formatDimensionsBn, formatWeightBn } from '../data';
 import { useCartStore, useWishlistStore, useUIStore } from '../store';
 
 export const ProductDetailPage: React.FC = () => {
@@ -201,22 +201,22 @@ export const ProductDetailPage: React.FC = () => {
           <div className="text-sm space-y-2">
             <div className="flex gap-2">
               <span className="text-warm-gray min-w-[80px]">উপকরণ:</span>
-              <span>{product.materials.join(', ')}</span>
+              <span>{translateMaterialsBn(product.materials)}</span>
             </div>
             <div className="flex gap-2">
               <span className="text-warm-gray min-w-[80px]">মাপ:</span>
-              <span>{product.dimensions}</span>
+              <span>{formatDimensionsBn(product.dimensions)}</span>
             </div>
             {product.weight && (
               <div className="flex gap-2">
                 <span className="text-warm-gray min-w-[80px]">ওজন:</span>
-                <span>{product.weight}</span>
+                <span>{formatWeightBn(product.weight)}</span>
               </div>
             )}
             {product.craftTechnique && (
               <div className="flex gap-2">
                 <span className="text-warm-gray min-w-[80px]">শিল্পকৌশল:</span>
-                <span>{product.craftTechnique}</span>
+                <span>{translateCraftBn(product.craftTechnique)}</span>
               </div>
             )}
           </div>
@@ -251,10 +251,10 @@ export const ProductDetailPage: React.FC = () => {
               <h4 className="font-medium mb-2">পণ্যের তথ্য</h4>
               <dl className="space-y-1">
                 <dt className="text-warm-gray">SKU</dt><dd>{product.sku}</dd>
-                <dt className="text-warm-gray">উপকরণ</dt><dd>{product.materials.join(', ')}</dd>
-                <dt className="text-warm-gray">মাপ</dt><dd>{product.dimensions}</dd>
-                <dt className="text-warm-gray">ওজন</dt><dd>{product.weight}</dd>
-                <dt className="text-warm-gray">শিল্পকৌশল</dt><dd>{product.craftTechnique}</dd>
+                <dt className="text-warm-gray">উপকরণ</dt><dd>{translateMaterialsBn(product.materials)}</dd>
+                <dt className="text-warm-gray">মাপ</dt><dd>{formatDimensionsBn(product.dimensions)}</dd>
+                <dt className="text-warm-gray">ওজন</dt><dd>{formatWeightBn(product.weight)}</dd>
+                <dt className="text-warm-gray">শিল্পকৌশল</dt><dd>{translateCraftBn(product.craftTechnique)}</dd>
               </dl>
             </div>
             <div className="bg-cream p-4 rounded">
