@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, ShoppingBag, Eye } from 'lucide-react';
+import { Heart, ShoppingBag, Eye, Check } from 'lucide-react';
 import { Product, formatPrice, translateMaterialsBn } from '../data';
 import { useCartStore, useWishlistStore, useUIStore } from '../store';
 
 // === PRODUCT CARD ===
 export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ product, index = 0 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
   const { addItem } = useCartStore();
   const { toggleItem, isInWishlist } = useWishlistStore();
-  const { openCart, addToast } = useUIStore();
+  const { addToast } = useUIStore();
   const inWishlist = isInWishlist(product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -18,8 +19,10 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
     e.stopPropagation();
     if (product.stock > 0) {
       addItem(product, product.variants.length > 0 ? product.variants[0] : null, 1);
-      addToast('ব্যাগে যোগ করা হয়েছে', 'success');
-      openCart();
+      addToast('কার্টে যোগ হয়েছে', 'success');
+      // Show button feedback
+      setJustAdded(true);
+      setTimeout(() => setJustAdded(false), 1200);
     }
   };
 
@@ -78,15 +81,28 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
             </button>
           </div>
 
-          {/* Mobile Add to Cart */}
-          <div className={`absolute bottom-0 left-0 right-0 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-            <div className="bg-white/90 backdrop-blur-sm p-2 flex gap-2">
+          {/* Add to Cart - Always visible on mobile, hover on desktop */}
+          <div className={`absolute bottom-0 left-0 right-0 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-100 md:opacity-0 md:translate-y-2'}`}>
+            <div className="bg-white/95 backdrop-blur-sm p-2">
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
-                className="flex-1 bg-forest text-white py-2 rounded text-sm font-medium hover:bg-forest-light transition-colors disabled:bg-warm-gray disabled:cursor-not-allowed flex items-center justify-center gap-1"
+                className={`w-full py-2.5 rounded text-sm font-medium transition-all duration-200 disabled:bg-warm-gray disabled:cursor-not-allowed flex items-center justify-center gap-1.5 min-h-[44px] ${
+                  justAdded 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-forest text-white hover:bg-forest-light'
+                }`}
+                aria-label={justAdded ? 'কার্টে যোগ হয়েছে' : `${product.nameBn} কার্টে যোগ করুন`}
               >
-                <ShoppingBag size={14} /> ব্যাগে যোগ করুন
+                {justAdded ? (
+                  <>
+                    <Check size={16} /> যোগ হয়েছে
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag size={16} /> ব্যাগে যোগ করুন
+                  </>
+                )}
               </button>
             </div>
           </div>

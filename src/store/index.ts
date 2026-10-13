@@ -222,7 +222,7 @@ interface UIStore {
   isCartOpen: boolean;
   isMobileMenuOpen: boolean;
   isSearchOpen: boolean;
-  toasts: { id: string; message: string; type: 'success' | 'error' | 'info' }[];
+  toasts: { id: string; message: string; type: 'success' | 'error' | 'info'; count?: number }[];
   openCart: () => void;
   closeCart: () => void;
   toggleMobileMenu: () => void;
@@ -244,7 +244,20 @@ export const useUIStore = create<UIStore>()((set) => ({
   toggleSearch: () => set(state => ({ isSearchOpen: !state.isSearchOpen })),
   addToast: (message, type) => {
     const id = Date.now().toString();
-    set(state => ({ toasts: [...state.toasts, { id, message, type }] }));
+    set(state => {
+      // Check if similar toast exists and aggregate
+      const existingToast = state.toasts.find(t => t.message === message && t.type === type);
+      if (existingToast) {
+        return {
+          toasts: state.toasts.map(t => 
+            t.id === existingToast.id 
+              ? { ...t, count: (t.count || 1) + 1 }
+              : t
+          )
+        };
+      }
+      return { toasts: [...state.toasts, { id, message, type, count: 1 }] };
+    });
     setTimeout(() => {
       set(state => ({ toasts: state.toasts.filter(t => t.id !== id) }));
     }, 4000);
