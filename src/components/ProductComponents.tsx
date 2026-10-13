@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Eye } from 'lucide-react';
-import { Product, formatPrice } from '../data';
+import { Product, formatPrice, translateMaterialsBn } from '../data';
 import { useCartStore, useWishlistStore, useUIStore } from '../store';
 
 // === PRODUCT CARD ===
@@ -101,7 +101,7 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
 
         {/* Product Info */}
         <div>
-          <p className="text-xs text-warm-gray mb-1">{product.materials[0]}</p>
+          <p className="text-xs text-warm-gray mb-1">{translateMaterialsBn(product.materials)}</p>
           <h3 className="text-sm font-medium line-clamp-2 mb-1 group-hover:text-forest transition-colors">
             {product.nameBn}
           </h3>

@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ivory: #FAF7F2;
-  --color-cream: #F5F0E8;
-  --color-forest: #1B4332;
-  --color-forest-light: #2D6A4F;
-  --color-terracotta: #C1440E;
-  --color-terracotta-light: #E07A5F;
-  --color-mustard: #D4A843;
-  --color-earth: #6B4226;
-  --color-charcoal: #2C2C2C;
-  --color-warm-gray: #8B7E74;
-  --color-light-border: #E8E0D5;
+  /* Brand Color System - Updated for better hierarchy and accessibility */
+  --color-ivory: #F7F4ED;           /* Main warm background */
+  --color-cream: #E4DED2;           /* Secondary surfaces, borders */
+  --color-forest: #173F35;          /* Primary: navigation, primary CTA */
+  --color-forest-light: #102F29;    /* Hover, footer, pressed state */
+  --color-terracotta: #A9442E;      /* High-intent CTA, sale accent */
+  --color-terracotta-light: #8B3626; /* Terracotta hover */
+  --color-mustard: #B58B47;         /* Craft gold - decorative only */
+  --color-sage: #DCE5D8;            /* Soft surfaces, chips */
+  --color-earth: #566257;           /* Muted text, secondary */
+  --color-charcoal: #2C2C2C;        /* Primary text */
+  --color-warm-gray: #566257;       /* Secondary text */
+  --color-light-border: #E4DED2;    /* Borders */
   --font-bengali: 'Hind Siliguri', sans-serif;
   --font-latin: 'Inter', sans-serif;
 }
