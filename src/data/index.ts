@@ -138,53 +138,44 @@ const IMG_PARAMS = '?w=800&h=800&fit=crop&auto=format&q=80';
 // Duplicate/mismatched URLs have been removed. Products without verified photos show "image-pending.svg".
 
 const REAL_IMAGES: Record<string, string> = {
-  // Bamboo & Cane - Each URL used ONCE only
-  'p001': `${UNSPLASH_BASE}/photo-1601330862030-1e08c703ac04${IMG_PARAMS}`, // cane basket (unique)
-  'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // laundry basket (unique)
-  'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // serving tray (unique)
-  // p004, p005, p006, p007 - awaiting real photoshoot
-  'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // hand fan (unique)
+  // AI-Generated Concept Images (clearly marked for development preview)
+  'p001': 'https://image.qwenlm.ai/generated-images/f8908c69-4f99-4489-8ac5-b855f19e8a2a/_result.png', // cane basket
+  'p004': 'https://image.qwenlm.ai/generated-images/660024d2-72d9-4205-b1d7-3ad71d131360/_result.png', // bamboo lampshade
+  'p008': 'https://image.qwenlm.ai/generated-images/3495a90f-08b5-44bc-a9ba-ee72e3b40380/_result.png', // terracotta pot
+  'p010': 'https://image.qwenlm.ai/generated-images/e9dc11b1-3291-43f8-9a6d-413add0bc3f9/_result.png', // clay tea cup set
+  'p013': 'https://image.qwenlm.ai/generated-images/8ea4c7bb-f356-422c-b476-3e62fea17adc/_result.png', // jute tote bag
+  'p017': 'https://image.qwenlm.ai/generated-images/bc22edd4-0617-4aed-8a27-c9c7ca4f18eb/_result.png', // nakshi kantha cushion
+  'p021': 'https://image.qwenlm.ai/generated-images/4023a9ce-d046-45bb-87f4-7e5dc015f6de/_result.png', // shital pati mat
+  'p024': 'https://image.qwenlm.ai/generated-images/acc1db42-6582-4a0d-b40e-61517572ad83/_result.png', // crochet coasters
+  'p027': 'https://image.qwenlm.ai/generated-images/29f3389f-9056-49e7-accd-6ec5c8993fc1/_result.png', // wooden jewelry box
+  'p028': 'https://image.qwenlm.ai/generated-images/3562484e-2314-4ce8-955d-bb13d5967940/_result.png', // rickshaw art frame
   
-  // Pottery - Each URL used ONCE only
-  'p008': `${UNSPLASH_BASE}/photo-1493106819501-66d381c466f1${IMG_PARAMS}`, // plant pot (unique)
-  'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // shokher hari (unique)
-  'p010': `${UNSPLASH_BASE}/photo-1556909114-f6e7ad7d3136${IMG_PARAMS}`, // tea cups (unique)
-  'p011': `${UNSPLASH_BASE}/photo-1602874801006-e26c0477f4d1${IMG_PARAMS}`, // candle holder (unique)
-  'p012': `${UNSPLASH_BASE}/photo-1584622650111-993a426fbf0a${IMG_PARAMS}`, // clay vase (unique)
-  
-  // Jute - Each URL used ONCE only
-  'p013': `${UNSPLASH_BASE}/photo-1590736969955-71cc94901144${IMG_PARAMS}`, // jute tote (unique)
-  'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag (unique)
-  'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter (unique)
-  'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner (unique)
-  
-  // Nakshi Kantha - Each URL used ONCE only
-  'p017': `${UNSPLASH_BASE}/photo-1606107557195-0e29a497b413${IMG_PARAMS}`, // cushion cover (unique)
-  'p018': `${UNSPLASH_BASE}/photo-1620799139507-2a76f79a2f4d${IMG_PARAMS}`, // bed runner (unique)
-  'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // kantha tote (unique)
-  'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch (unique)
-  
-  // Shital Pati - Each URL used ONCE only
-  'p021': `${UNSPLASH_BASE}/photo-1631679706909-1844bbd6dae1${IMG_PARAMS}`, // floor mat (unique)
-  'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat (unique)
-  // p023 - awaiting real photoshoot (was duplicate of p005)
-  
-  // Crochet - Each URL used ONCE only
-  'p024': `${UNSPLASH_BASE}/photo-1622957461168-2c2c7a5a5d8f${IMG_PARAMS}`, // coasters (unique)
-  'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger (unique)
-  
-  // Wood & Folk - Each URL used ONCE only
-  'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray (unique)
-  'p027': `${UNSPLASH_BASE}/photo-1606760227091-3dd870d97f1d${IMG_PARAMS}`, // jewelry box (unique)
-  // p028 - awaiting real photoshoot
-  
-  // Paper & Gifts - Each URL used ONCE only
-  'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal (unique)
-  'p030': `${UNSPLASH_BASE}/photo-1513475382585-d06e58bcb0e0${IMG_PARAMS}`, // greeting cards (unique)
+  // Unsplash Reference Images (development preview only)
+  'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // laundry basket
+  'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // serving tray
+  'p005': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // desk organizer
+  'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // hand fan
+  'p007': `${UNSPLASH_BASE}/photo-1586802005224-03286636cbca${IMG_PARAMS}`, // tissue box cover
+  'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // shokher hari
+  'p011': `${UNSPLASH_BASE}/photo-1602874801006-e26c0477f4d1${IMG_PARAMS}`, // candle holder
+  'p012': `${UNSPLASH_BASE}/photo-1584622650111-993a426fbf0a${IMG_PARAMS}`, // clay vase
+  'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag
+  'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter
+  'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner
+  'p018': `${UNSPLASH_BASE}/photo-1620799139507-2a76f79a2f4d${IMG_PARAMS}`, // bed runner
+  'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // kantha tote
+  'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch
+  'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat
+  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // shital pati tote
+  'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger
+  'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray
+  'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal
+  'p030': `${UNSPLASH_BASE}/photo-1513475382585-d06e58bcb0e0${IMG_PARAMS}`, // greeting cards
 };
 
 // Products awaiting real photoshoot - will show image-pending.svg
-const PENDING_PHOTOSHOOT = ['p004', 'p005', 'p007', 'p023', 'p028'];
+// Note: p004, p023, p028 now have AI-generated concept images for development preview
+const PENDING_PHOTOSHOOT: string[] = []; // All products now have preview images
 
 // Branded fallback SVG for products without verified photos
 const BRANDED_FALLBACK = '/assets/brand/image-pending.svg';

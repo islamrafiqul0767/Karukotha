@@ -207,7 +207,12 @@ export const AdminDashboard: React.FC = () => {
           <div>
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-2xl font-bold text-forest">পণ্য ব্যবস্থাপনা</h1>
-              <button className="bg-forest text-white px-4 py-2 rounded text-sm flex items-center gap-1 hover:bg-forest-light">
+              <button 
+                onClick={() => {
+                  alert('পণ্য তৈরির ফর্ম শীঘ্রই আসছে। বর্তমানে product data/src/data/index.ts ফাইলে manage করা হচ্ছে।');
+                }}
+                className="bg-forest text-white px-4 py-2 rounded text-sm flex items-center gap-1 hover:bg-forest-light transition-colors"
+              >
                 <Plus size={14} /> নতুন পণ্য
               </button>
             </div>
