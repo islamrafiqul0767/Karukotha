@@ -2,8 +2,59 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Truck, Shield, Leaf, Award } from 'lucide-react';
+import { useState } from 'react';
 import { ProductCard } from '../components/ProductComponents';
 import { categories, getFeaturedProducts, getNewArrivals, getBestSellers, getActiveOffers, getPublishedBlogPosts, storeSettings } from '../data';
+
+// Newsletter Form Component with proper states
+const NewsletterForm: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus('error');
+      setMessage('সঠিক ইমেইল দিন');
+      return;
+    }
+    setStatus('loading');
+    // Simulate API call
+    setTimeout(() => {
+      setStatus('success');
+      setMessage('ধন্যবাদ! আপনি সফলভাবে সাবস্ক্রাইব করেছেন।');
+      setEmail('');
+    }, 1000);
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="bg-white/10 rounded-lg p-4 max-w-md mx-auto">
+        <p className="text-white font-medium">✓ {message}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto">
+        <input
+          type="email"
+          value={email}
+          onChange={e => { setEmail(e.target.value); if (status === 'error') setStatus('idle'); }}
+          placeholder="আপনার ইমেইল"
+          className={`flex-1 px-4 py-3 rounded bg-white/10 border text-white placeholder:text-white/50 focus:outline-none focus:border-white/50 ${status === 'error' ? 'border-terracotta' : 'border-white/20'}`}
+          disabled={status === 'loading'}
+        />
+        <button type="submit" disabled={status === 'loading'} className="bg-terracotta text-white px-6 py-3 rounded font-medium hover:bg-terracotta-light transition-colors disabled:opacity-50">
+          {status === 'loading' ? '...' : 'সাবস্ক্রাইব'}
+        </button>
+      </form>
+      {status === 'error' && <p className="text-terracotta text-sm mt-2">{message}</p>}
+    </div>
+  );
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -63,6 +114,9 @@ export const HomePage: React.FC = () => {
                   src="https://image.qwenlm.ai/generated-images/80ad9f58-271c-4e80-b9e7-03138a18a7a4/_result.png"
                   alt="Bangladeshi Handicrafts Collection — কারুকথা"
                   className="w-full h-full object-cover"
+                  width={600}
+                  height={750}
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
                 />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-lg shadow-lg">
@@ -225,6 +279,9 @@ export const HomePage: React.FC = () => {
                 src="https://image.qwenlm.ai/generated-images/d61b27d1-29e7-4737-934d-3024eff7d869/_result.png"
                 alt="কারিগরের হাতে বাঁশ বোনার কাজ"
                 className="w-full h-full object-cover"
+                width={800}
+                height={600}
+                onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
               />
             </div>
             <div className="absolute -bottom-3 -right-3 bg-white p-3 rounded-lg shadow-lg">
@@ -277,7 +334,7 @@ export const HomePage: React.FC = () => {
             >
               <Link to={`/blog/${post.slug}`} className="group block">
                 <div className="aspect-video bg-cream rounded-lg overflow-hidden mb-3">
-                  <img src={post.featuredImage} alt={post.titleBn} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img src={post.featuredImage} alt={post.titleBn} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={600} height={400} onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }} />
                 </div>
                 <p className="text-xs text-warm-gray mb-1">{new Date(post.publishedAt).toLocaleDateString('bn-BD')} • {post.category}</p>
                 <h3 className="font-semibold group-hover:text-forest transition-colors line-clamp-2">{post.titleBn}</h3>
@@ -293,16 +350,7 @@ export const HomePage: React.FC = () => {
         <div className="max-w-xl mx-auto px-4 text-center text-white">
           <h2 className="text-2xl font-bold mb-3">আমাদের সাথে যুক্ত থাকুন</h2>
           <p className="text-white/70 mb-6">নতুন পণ্য, অফার ও হস্তশিল্পের গল্প সরাসরি আপনার ইনবক্সে।</p>
-          <form onSubmit={e => { e.preventDefault(); alert('ডেমো: সাবস্ক্রিপশন সফল!'); }} className="flex gap-2 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="আপনার ইমেইল"
-              className="flex-1 px-4 py-3 rounded bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white/50"
-            />
-            <button type="submit" className="bg-terracotta text-white px-6 py-3 rounded font-medium hover:bg-terracotta-light transition-colors">
-              সাবস্ক্রাইব
-            </button>
-          </form>
+          <NewsletterForm />
           <p className="text-xs text-white/50 mt-3">আমরা আপনার তথ্য গোপন রাখি। যেকোনো সময় আনসাবস্ক্রাইব করতে পারবেন।</p>
         </div>
       </section>

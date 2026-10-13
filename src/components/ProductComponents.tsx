@@ -47,10 +47,13 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
       <Link to={`/product/${product.slug}`} className="block">
         <div className="relative aspect-square bg-cream rounded overflow-hidden mb-3">
           <img
-            src={product.images[0]?.url || 'https://placehold.co/400x400/E8E0D5/8B7E74?text=Product'}
-            alt={product.images[0]?.alt || product.nameBn}
+            src={product.images[0]?.url || '/assets/brand/image-pending.svg'}
+            alt={product.images[0]?.altBn || product.nameBn}
+            width={400}
+            height={400}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
+            onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
           />
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
@@ -62,9 +65,6 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
             )}
             {discount > 0 && (
               <span className="bg-terracotta text-white text-[10px] px-2 py-0.5 rounded font-medium">-{discount}%</span>
-            )}
-            {product.isDemoData && (
-              <span className="bg-charcoal/70 text-white text-[9px] px-1.5 py-0.5 rounded">DEMO</span>
             )}
           </div>
 
@@ -139,9 +139,12 @@ export const ProductGallery: React.FC<{ product: Product }> = ({ product }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          src={images[activeIndex]?.url || 'https://placehold.co/800x800/E8E0D5/8B7E74?text=Product'}
-          alt={images[activeIndex]?.alt || product.nameBn}
+          src={images[activeIndex]?.url || '/assets/brand/image-pending.svg'}
+          alt={images[activeIndex]?.altBn || images[activeIndex]?.alt || product.nameBn}
+          width={800}
+          height={800}
           className="w-full h-full object-cover"
+          onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
         />
         {/* Navigation Arrows */}
         <button
@@ -172,7 +175,7 @@ export const ProductGallery: React.FC<{ product: Product }> = ({ product }) => {
               idx === activeIndex ? 'border-forest thumb-active' : 'border-transparent hover:border-warm-gray'
             }`}
           >
-            <img src={img.url} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+            <img src={img.url} alt={img.altBn || img.alt} className="w-full h-full object-cover" loading="lazy" width={64} height={64} onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }} />
           </button>
         ))}
       </div>

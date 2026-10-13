@@ -76,9 +76,7 @@ export const ProductDetailPage: React.FC = () => {
         <div className="space-y-6">
           {/* Title & Rating */}
           <div>
-            {product.isDemoData && (
-              <span className="inline-block bg-charcoal/10 text-charcoal text-xs px-2 py-0.5 rounded mb-2">DEMO DATA</span>
-            )}
+
             <h1 className="text-2xl md:text-3xl font-bold text-forest mb-2">{product.nameBn}</h1>
             <p className="text-sm text-warm-gray">{product.nameEn}</p>
             <div className="flex items-center gap-3 mt-2">

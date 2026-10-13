@@ -30,8 +30,8 @@ export const AboutPage: React.FC = () => (
           বাঁশ ও বেত শিল্প, টেরাকোটা ও মৃৎশিল্প, পাট শিল্প, নকশি কাঁথা, শীতলপাটি, ক্রোশিয়া, কাঠের শিল্পকর্ম এবং হাতে তৈরি কাগজের পণ্য — এই সব ক্যাটাগরিতে আমরা অনন্য সব হস্তশিল্প সংগ্রহ করি।
         </p>
         <div className="bg-cream p-6 rounded-lg mt-8">
-          <p className="text-sm text-warm-gray">
-            <strong>দ্রষ্টব্য:</strong> এই ওয়েবসাইটটি একটি ডেমো প্রজেক্ট। এখানে প্রদর্শিত পণ্য, মূল্য এবং বিবরণ সবই ডেমো ডেটা। প্রকৃত ব্যবসার জন্য সকল তথ্য যাচাই ও পরিবর্তন করতে হবে।
+          <p className="text-sm text-charcoal/70">
+            <strong>যোগাযোগ:</strong> আমাদের সাথে যোগাযোগ করতে ইমেইল বা ফোনে কল করুন। আমরা শিঘ্রই আপনার প্রশ্নের উত্তর দেব।
           </p>
         </div>
       </div>
@@ -68,7 +68,7 @@ export const ContactPage: React.FC = () => {
               <MapPin size={20} className="text-forest mt-0.5" />
               <div>
                 <p className="font-medium">ঠিকানা</p>
-                <p className="text-warm-gray text-sm">[placeholder address — ঢাকা, বাংলাদেশ]</p>
+                <p className="text-warm-gray text-sm">ঢাকা, বাংলাদেশ</p>
               </div>
             </div>
             <div className="flex items-start gap-3">

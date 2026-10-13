@@ -27,7 +27,7 @@ export const BlogPage: React.FC = () => {
           >
             <Link to={`/blog/${post.slug}`} className="group block">
               <div className="aspect-video bg-cream rounded-lg overflow-hidden mb-4">
-                <img src={post.featuredImage} alt={post.titleBn} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={post.featuredImage} alt={post.titleBn} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={600} height={400} onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }} />
               </div>
               <div className="flex items-center gap-3 text-xs text-warm-gray mb-2">
                 <span className="flex items-center gap-1"><Calendar size={12} />{new Date(post.publishedAt).toLocaleDateString('bn-BD')}</span>
@@ -86,7 +86,7 @@ export const BlogPostPage: React.FC = () => {
         </header>
 
         <div className="aspect-video bg-cream rounded-lg overflow-hidden mb-8">
-          <img src={post.featuredImage} alt={post.titleBn} className="w-full h-full object-cover" />
+          <img src={post.featuredImage} alt={post.titleBn} className="w-full h-full object-cover" width={1200} height={600} onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }} />
         </div>
 
         <div className="prose max-w-none text-charcoal/80 leading-relaxed space-y-4" dangerouslySetInnerHTML={{ __html: post.contentBn }} />
