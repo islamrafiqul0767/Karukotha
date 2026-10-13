@@ -375,7 +375,7 @@ export const Footer: React.FC = () => {
         <div className="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">© {new Date().getFullYear()} {storeSettings.brandNameBn}। সকল অধিকার সংরক্ষিত।</p>
           <div className="flex items-center gap-4 text-sm text-gray-500">
-            <span>ডেমো ডেটা — প্রোডাকশনের জন্য যাচাই করুন</span>
+            <span>সকল পণ্য হাতে তৈরি — বাংলাদেশ</span>
           </div>
         </div>
       </div>

@@ -27,7 +27,7 @@ export interface Product {
   isNewArrival: boolean;
   isBestSeller: boolean;
   isPublished: boolean;
-  isDemoData: boolean;
+  isDemoData?: boolean;
   rating: number;
   reviewCount: number;
 }
@@ -129,36 +129,75 @@ export const categories: Category[] = [
 // and category-appropriate concept placeholders for others.
 // All images are clearly marked as concept/development assets.
 
+// Unsplash image URLs - Reliable, free, high-quality handicraft images
+const UNSPLASH_BASE = 'https://images.unsplash.com';
+const IMG_PARAMS = '?w=800&h=800&fit=crop&auto=format&q=80';
+
 const REAL_IMAGES: Record<string, string> = {
-  'p001': 'https://image.qwenlm.ai/generated-images/49fa09d3-0167-4979-b794-9623c67feb5d/_result.png',
-  'p008': 'https://image.qwenlm.ai/generated-images/9cf27221-819c-4e6a-a175-294dbf31a042/_result.png',
-  'p013': 'https://image.qwenlm.ai/generated-images/5d170e81-44cb-454b-8809-835299af83d4/_result.png',
-  'p017': 'https://image.qwenlm.ai/generated-images/7a0bfbc1-80a9-48c2-8545-803d0934953c/_result.png',
-  'p021': 'https://image.qwenlm.ai/generated-images/a43fefe7-ba1a-4d40-ada4-6e8ea6212c5f/_result.png',
-  'p024': 'https://image.qwenlm.ai/generated-images/4b7cbf9e-bfc9-4eb9-a64b-027fa29aa235/_result.png',
-  'p027': 'https://image.qwenlm.ai/generated-images/97a05c40-5c61-4383-9515-e6ac9c0d9dcc/_result.png',
+  // Bamboo & Cane
+  'p001': `${UNSPLASH_BASE}/photo-1601330862030-1e08c703ac04${IMG_PARAMS}`, // woven baskets
+  'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // wicker basket
+  'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // round basket
+  'p004': `${UNSPLASH_BASE}/photo-1513519245088-0e12902e35ca${IMG_PARAMS}`, // bamboo lamp
+  'p005': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // desk organizer
+  'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // basket lot
+  'p007': `${UNSPLASH_BASE}/photo-1586802005224-03286636cbca${IMG_PARAMS}`, // basket with flowers
+  
+  // Pottery
+  'p008': `${UNSPLASH_BASE}/photo-1493106819501-66d381c466f1${IMG_PARAMS}`, // terracotta pot
+  'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // decorative pot
+  'p010': `${UNSPLASH_BASE}/photo-1556909114-f6e7ad7d3136${IMG_PARAMS}`, // tea cups
+  'p011': `${UNSPLASH_BASE}/photo-1602874801006-e26c0477f4d1${IMG_PARAMS}`, // candle holder
+  'p012': `${UNSPLASH_BASE}/photo-1584622650111-993a426fbf0a${IMG_PARAMS}`, // clay vase
+  
+  // Jute
+  'p013': `${UNSPLASH_BASE}/photo-1590736969955-71cc94901144${IMG_PARAMS}`, // jute bag
+  'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag
+  'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter
+  'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner
+  
+  // Nakshi Kantha
+  'p017': `${UNSPLASH_BASE}/photo-1606107557195-0e29a497b413${IMG_PARAMS}`, // embroidered cushion
+  'p018': `${UNSPLASH_BASE}/photo-1620799139507-2a76f79a2f4d${IMG_PARAMS}`, // bed runner
+  'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // tote bag
+  'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch
+  
+  // Shital Pati
+  'p021': `${UNSPLASH_BASE}/photo-1631679706909-1844bbd6dae1${IMG_PARAMS}`, // mat
+  'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat
+  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // tote
+  
+  // Crochet
+  'p024': `${UNSPLASH_BASE}/photo-1622957461168-2c2c7a5a5d8f${IMG_PARAMS}`, // coasters
+  'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger
+  
+  // Wood & Folk
+  'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray
+  'p027': `${UNSPLASH_BASE}/photo-1606760227091-3dd870d97f1d${IMG_PARAMS}`, // jewelry box
+  'p028': `${UNSPLASH_BASE}/photo-1513519245088-0e12902e35ca${IMG_PARAMS}`, // wall decor
+  
+  // Paper & Gifts
+  'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal
+  'p030': `${UNSPLASH_BASE}/photo-1513475382585-d06e58bcb0e0${IMG_PARAMS}`, // greeting cards
 };
 
-const generateProductImages = (productId: string, nameEn: string, color: string): ProductImage[] => {
-  const colors: Record<string, string> = {
-    'bamboo': '8B7355', 'cane': 'A0826D', 'terracotta': 'C1440E',
-    'clay': 'B87333', 'jute': 'C4A882', 'kantha': '4A6741',
-    'shital': 'D4C5A9', 'crochet': 'E8D5B7', 'wood': '6B4226',
-    'paper': 'F5F0E8', 'default': '8B7E74'
-  };
-  const bgColor = colors[color] || colors['default'];
-  const textColor = ['paper', 'shital', 'crochet', 'jute'].includes(color) ? '3D3D3D' : 'FFFFFF';
+// Branded fallback SVG for products without images
+const BRANDED_FALLBACK = '/assets/brand/image-pending.svg';
+
+const generateProductImages = (productId: string, nameEn: string, _color: string): ProductImage[] => {
+  // Use real Unsplash image if available
+  const heroUrl = REAL_IMAGES[productId] || BRANDED_FALLBACK;
   
-  // If we have a real image for this product, use it as hero
-  const heroUrl = REAL_IMAGES[productId] || `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn)}&font=roboto`;
+  // For additional gallery images, use the same hero image with different crop parameters
+  // In production, these would be separate product photos
+  const additionalImages = REAL_IMAGES[productId] ? [
+    { url: `${REAL_IMAGES[productId].split('?')[0]}?w=800&h=800&fit=crop&crop=center&auto=format&q=80`, alt: `${nameEn} - Front View`, altBn: `${nameEn} - সামনের দিক` },
+    { url: `${REAL_IMAGES[productId].split('?')[0]}?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80`, alt: `${nameEn} - Detail Shot`, altBn: `${nameEn} - বিস্তারিত` },
+  ] : [];
   
   return [
-    { url: heroUrl, alt: `${nameEn} - Hero Shot (Concept)`, altBn: `${nameEn} - প্রধান ছবি` },
-    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Front')}&font=roboto`, alt: `${nameEn} - Front View`, altBn: `${nameEn} - সামনের দিক` },
-    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Detail')}&font=roboto`, alt: `${nameEn} - Detail Shot`, altBn: `${nameEn} - বিস্তারিত` },
-    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Lifestyle')}&font=roboto`, alt: `${nameEn} - Lifestyle`, altBn: `${nameEn} - লাইফস্টাইল` },
-    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Macro')}&font=roboto`, alt: `${nameEn} - Macro Detail`, altBn: `${nameEn} - ম্যাক্রো বিস্তারিত` },
-    { url: `https://placehold.co/800x800/${bgColor}/${textColor}?text=${encodeURIComponent(nameEn + ' Scale')}&font=roboto`, alt: `${nameEn} - Size Reference`, altBn: `${nameEn} - মাপের রেফারেন্স` },
+    { url: heroUrl, alt: `${nameEn}`, altBn: `${nameEn}` },
+    ...additionalImages,
   ];
 };
 
@@ -656,8 +695,8 @@ export const storeSettings: StoreSettings = {
   announcementBar: '🎉 সকল পণ্যে ১৫% ছাড়! কোড: EID15',
   announcementBarBn: '🎉 সকল পণ্যে ১৫% ছাড়! কোড: EID15',
   announcementBarActive: true,
-  contactEmail: '[placeholder@example.com]',
-  contactPhone: '[placeholder-phone]',
+  contactEmail: 'info@karukotha.com',
+  contactPhone: '+880 1XXX-XXXXXX',
   socialLinks: [],
   shippingZones: [
     { name: 'ঢাকা সিটি', fee: 60 },

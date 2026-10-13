@@ -241,7 +241,7 @@ export const AdminDashboard: React.FC = () => {
                         <span className={`text-xs px-2 py-0.5 rounded ${product.isPublished ? 'bg-forest/10 text-forest' : 'bg-warm-gray/10 text-warm-gray'}`}>
                           {product.isPublished ? 'প্রকাশিত' : 'খসড়া'}
                         </span>
-                        {product.isDemoData && <span className="ml-1 text-xs text-warm-gray">(DEMO)</span>}
+
                       </td>
                       <td className="py-2 px-3">
                         <div className="flex gap-1">
@@ -455,11 +455,11 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <div>
                 <label className="text-sm font-medium block mb-1">যোগাযোগ ইমেইল</label>
-                <input type="email" defaultValue="[placeholder@example.com]" className="w-full px-3 py-2 border border-light-border rounded" />
+                <input type="email" defaultValue="info@karukotha.com" className="w-full px-3 py-2 border border-light-border rounded" />
               </div>
               <div>
                 <label className="text-sm font-medium block mb-1">যোগাযোগ ফোন</label>
-                <input type="tel" defaultValue="[placeholder-phone]" className="w-full px-3 py-2 border border-light-border rounded" />
+                <input type="tel" defaultValue="+880 1XXX-XXXXXX" className="w-full px-3 py-2 border border-light-border rounded" />
               </div>
               <button className="bg-forest text-white px-6 py-2 rounded font-medium hover:bg-forest-light">
                 সংরক্ষণ করুন

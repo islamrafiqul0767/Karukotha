@@ -85,6 +85,29 @@ function App() {
               <Route path="/account" element={<AccountPage />} />
               <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/order-tracking" element={<OrderTrackingPage />} />
+              {/* 404 Page */}
+              <Route path="*" element={
+                <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+                  <h1 className="text-6xl font-bold text-forest mb-4">৪০৪</h1>
+                  <h2 className="text-2xl font-semibold text-charcoal mb-3">পৃষ্ঠা পাওয়া যায়নি</h2>
+                  <p className="text-warm-gray mb-8">আপনি যে পৃষ্ঠাটি খুঁজছেন তা বিদ্যমান নেই বা সরিয়ে ফেলা হয়েছে।</p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Link to="/shop" className="bg-forest text-white px-6 py-3 rounded font-medium hover:bg-forest-light transition-colors inline-flex items-center justify-center gap-2">
+                      শপে ফিরুন
+                    </Link>
+                    <Link to="/" className="border border-forest text-forest px-6 py-3 rounded font-medium hover:bg-cream transition-colors">
+                      হোম
+                    </Link>
+                  </div>
+                  {/* Search */}
+                  <div className="mt-8 max-w-md mx-auto">
+                    <p className="text-sm text-warm-gray mb-2">অথবা পণ্য খুঁজুন:</p>
+                    <form onSubmit={(e) => { e.preventDefault(); const input = e.currentTarget.querySelector('input'); if (input?.value) window.location.href = `/shop?search=${encodeURIComponent(input.value)}`; }}>
+                      <input type="text" placeholder="পণ্যের নাম লিখুন..." className="w-full px-4 py-3 border border-light-border rounded focus:outline-none focus:border-forest" />
+                    </form>
+                  </div>
+                </div>
+              } />
             </Routes>
           </Layout>
         } />
