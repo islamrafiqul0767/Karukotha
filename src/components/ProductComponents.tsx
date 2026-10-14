@@ -9,6 +9,7 @@ import { useCartStore, useWishlistStore, useUIStore } from '../store';
 export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ product, index = 0 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const { addItem } = useCartStore();
   const { toggleItem, isInWishlist } = useWishlistStore();
   const { addToast } = useUIStore();
@@ -17,12 +18,21 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    // Prevent duplicate clicks
+    if (isAdding || product.stock === 0) return;
+    
+    setIsAdding(true);
+    
     if (product.stock > 0) {
       addItem(product, product.variants.length > 0 ? product.variants[0] : null, 1);
       addToast('কার্টে যোগ হয়েছে', 'success');
-      // Show button feedback
       setJustAdded(true);
-      setTimeout(() => setJustAdded(false), 1200);
+      
+      setTimeout(() => {
+        setJustAdded(false);
+        setIsAdding(false);
+      }, 1200);
     }
   };
 
@@ -38,98 +48,109 @@ export const ProductCard: React.FC<{ product: Product; index?: number }> = ({ pr
     : 0;
 
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group"
+      className="group flex flex-col"
     >
-      <Link to={`/product/${product.slug}`} className="block">
-        <div className="relative aspect-square bg-cream rounded overflow-hidden mb-3">
-          <img
-            src={product.images[0]?.url || '/assets/brand/image-pending.svg'}
-            alt={product.images[0]?.altBn || product.nameBn}
-            width={400}
-            height={400}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
-          />
-          {/* Badges */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
-            {product.isNewArrival && (
-              <span className="bg-forest text-white text-[10px] px-2 py-0.5 rounded font-medium">নতুন</span>
-            )}
-            {product.isBestSeller && (
-              <span className="bg-mustard text-charcoal text-[10px] px-2 py-0.5 rounded font-medium">বেস্ট সেলার</span>
-            )}
-            {discount > 0 && (
-              <span className="bg-terracotta text-white text-[10px] px-2 py-0.5 rounded font-medium">-{discount}%</span>
-            )}
-          </div>
-
-          {/* Quick Actions */}
-          <div className={`absolute top-2 right-2 flex flex-col gap-1 transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'}`}>
-            <button
-              onClick={handleWishlist}
-              className={`p-2 rounded-full shadow-md transition-colors ${inWishlist ? 'bg-terracotta text-white' : 'bg-white text-charcoal hover:bg-cream'}`}
-            >
-              <Heart size={16} fill={inWishlist ? 'currentColor' : 'none'} />
-            </button>
-          </div>
-
-          {/* Add to Cart - Always visible on mobile, hover on desktop */}
-          <div className={`absolute bottom-0 left-0 right-0 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-100 md:opacity-0 md:translate-y-2'}`}>
-            <div className="bg-white/95 backdrop-blur-sm p-2">
-              <button
-                onClick={handleAddToCart}
-                disabled={product.stock === 0}
-                className={`w-full py-2.5 rounded text-sm font-medium transition-all duration-200 disabled:bg-warm-gray disabled:cursor-not-allowed flex items-center justify-center gap-1.5 min-h-[44px] ${
-                  justAdded 
-                    ? 'bg-green-600 text-white' 
-                    : 'bg-forest text-white hover:bg-forest-light'
-                }`}
-                aria-label={justAdded ? 'কার্টে যোগ হয়েছে' : `${product.nameBn} কার্টে যোগ করুন`}
-              >
-                {justAdded ? (
-                  <>
-                    <Check size={16} /> যোগ হয়েছে
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag size={16} /> ব্যাগে যোগ করুন
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Out of stock overlay */}
-          {product.stock === 0 && (
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-              <span className="bg-white px-3 py-1 rounded text-sm font-medium">স্টক শেষ</span>
-            </div>
+      {/* Product Image Link */}
+      <Link 
+        to={`/product/${product.slug}`} 
+        className="block relative aspect-square bg-cream rounded-t-lg overflow-hidden"
+        aria-label={`${product.nameBn} এর বিস্তারিত দেখুন`}
+      >
+        <img
+          src={product.images[0]?.url || '/assets/brand/image-pending.svg'}
+          alt={product.images[0]?.altBn || product.nameBn}
+          width={400}
+          height={400}
+          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+          onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
+        />
+        
+        {/* Badges */}
+        <div className="absolute top-2 left-2 flex flex-col gap-1">
+          {product.isNewArrival && (
+            <span className="bg-forest text-white text-[10px] px-2 py-0.5 rounded font-medium">নতুন</span>
+          )}
+          {product.isBestSeller && (
+            <span className="bg-mustard text-charcoal text-[10px] px-2 py-0.5 rounded font-medium">বেস্ট সেলার</span>
+          )}
+          {discount > 0 && (
+            <span className="bg-terracotta text-white text-[10px] px-2 py-0.5 rounded font-medium">-{discount}%</span>
           )}
         </div>
 
-        {/* Product Info */}
-        <div>
-          <p className="text-xs text-warm-gray mb-1">{translateMaterialsBn(product.materials)}</p>
-          <h3 className="text-sm font-medium line-clamp-2 mb-1 group-hover:text-forest transition-colors">
+        {/* Wishlist Button */}
+        <button
+          onClick={handleWishlist}
+          className={`absolute top-2 right-2 p-2 rounded-full shadow-md transition-all duration-300 min-w-[44px] min-h-[44px] flex items-center justify-center ${
+            isHovered || inWishlist ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
+          } ${inWishlist ? 'bg-terracotta text-white' : 'bg-white text-charcoal hover:bg-cream'}`}
+          aria-label={inWishlist ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় যোগ করুন'}
+        >
+          <Heart size={18} fill={inWishlist ? 'currentColor' : 'none'} />
+        </button>
+
+        {/* Out of stock overlay */}
+        {product.stock === 0 && (
+          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+            <span className="bg-white px-3 py-1 rounded text-sm font-medium">স্টক শেষ</span>
+          </div>
+        )}
+      </Link>
+
+      {/* Add to Cart Button - Separate from image, below image */}
+      <div className="bg-white border-x border-b border-light-border rounded-b-lg">
+        <button
+          onClick={handleAddToCart}
+          disabled={product.stock === 0 || isAdding}
+          className={`w-full py-3 text-sm font-medium transition-all duration-200 disabled:bg-warm-gray disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] ${
+            justAdded 
+              ? 'bg-green-600 text-white' 
+              : 'bg-forest text-white hover:bg-forest-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest'
+          }`}
+          aria-label={justAdded ? 'কার্টে যোগ হয়েছে' : `${product.nameBn} কার্টে যোগ করুন`}
+          aria-busy={isAdding}
+        >
+          {justAdded ? (
+            <>
+              <Check size={18} /> যোগ হয়েছে
+            </>
+          ) : isAdding ? (
+            <>
+              <span className="spinner" /> যোগ হচ্ছে...
+            </>
+          ) : (
+            <>
+              <ShoppingBag size={18} /> ব্যাগে যোগ করুন
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Product Info - Below button */}
+      <div className="pt-3 px-1">
+        <p className="text-xs text-warm-gray mb-1">{translateMaterialsBn(product.materials)}</p>
+        <Link to={`/product/${product.slug}`} className="block">
+          <h3 className="text-sm font-medium line-clamp-2 mb-2 hover:text-forest transition-colors">
             {product.nameBn}
           </h3>
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-forest">{formatPrice(product.price)}</span>
-            {product.previousPrice && (
-              <span className="text-sm text-warm-gray line-through">{formatPrice(product.previousPrice)}</span>
-            )}
-          </div>
+        </Link>
+        <div className="flex items-baseline gap-2">
+          <span className="text-lg font-bold text-forest">{formatPrice(product.price)}</span>
+          {product.previousPrice && (
+            <span className="text-sm text-warm-gray line-through">{formatPrice(product.previousPrice)}</span>
+          )}
         </div>
-      </Link>
-    </motion.div>
+      </div>
+    </motion.article>
   );
 };
 

@@ -473,78 +473,238 @@ export const CheckoutPage: React.FC = () => {
 // === ORDER CONFIRMATION ===
 export const OrderConfirmationPage: React.FC = () => {
   const { orders } = useOrderStore();
+  const { addToast } = useUIStore();
   const orderId = window.location.pathname.split('/').pop() || '';
   const order = orders.find(o => o.id === orderId);
+  const [isDownloading, setIsDownloading] = useState<'png' | 'pdf' | null>(null);
 
   if (!order) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
         <h1 className="text-2xl font-bold text-forest mb-4">অর্ডার পাওয়া যায়নি</h1>
+        <p className="text-warm-gray mb-6">এই অর্ডারের তথ্য পাওয়া যায়নি বা আপনার অ্যাক্সেস নেই।</p>
         <Link to="/" className="text-forest underline">হোমে ফিরে যান</Link>
       </div>
     );
   }
 
+  const handleDownloadPNG = async () => {
+    try {
+      setIsDownloading('png');
+      const { generateInvoiceData, downloadInvoicePNG } = await import('../utils/invoiceGenerator');
+      const invoiceData = generateInvoiceData(order);
+      await downloadInvoicePNG(invoiceData);
+      addToast('ইনভয়েস ডাউনলোড হয়েছে', 'success');
+    } catch (error) {
+      console.error('Failed to download PNG:', error);
+      addToast('ইনভয়েস ডাউনলোড করতে সমস্যা হয়েছে', 'error');
+    } finally {
+      setIsDownloading(null);
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    try {
+      setIsDownloading('pdf');
+      const { generateInvoiceData, downloadInvoicePDF } = await import('../utils/invoiceGenerator');
+      const invoiceData = generateInvoiceData(order);
+      await downloadInvoicePDF(invoiceData);
+      addToast('ইনভয়েস ডাউনলোড হয়েছে', 'success');
+    } catch (error) {
+      console.error('Failed to download PDF:', error);
+      addToast('ইনভয়েস ডাউনলোড করতে সমস্যা হয়েছে', 'error');
+    } finally {
+      setIsDownloading(null);
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
-        <div className="w-16 h-16 bg-forest/10 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-3xl">✓</span>
-        </div>
-        <h1 className="text-2xl font-bold text-forest mb-2">অর্ডার সফল হয়েছে!</h1>
-        <p className="text-warm-gray">আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p>
+        <motion.div 
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
+          className="w-20 h-20 bg-forest/10 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <span className="text-4xl text-forest">✓</span>
+        </motion.div>
+        <h1 className="text-2xl font-bold text-forest mb-2">অর্ডার সফলভাবে গ্রহণ করা হয়েছে!</h1>
+        <p className="text-warm-gray">আপনার অর্ডারের বিস্তারিত নিচে দেওয়া হলো। ইনভয়েস ডাউনলোড করতে পারেন।</p>
       </motion.div>
 
-      <div className="bg-white p-6 rounded-lg border border-light-border space-y-4">
-        <div className="flex justify-between items-center">
+      {/* Invoice Card */}
+      <div className="bg-white p-6 rounded-lg border border-light-border space-y-4" id="invoice-content">
+        {/* Header */}
+        <div className="flex justify-between items-start border-b border-light-border pb-4">
           <div>
-            <p className="text-sm text-warm-gray">অর্ডার নম্বর</p>
-            <p className="text-lg font-bold text-forest">{order.orderNumber}</p>
+            <h2 className="text-xl font-bold text-forest">কারুকথা</h2>
+            <p className="text-sm text-warm-gray">ইনভয়েস / Invoice</p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-warm-gray">তারিখ</p>
-            <p className="text-sm">{new Date(order.createdAt).toLocaleDateString('bn-BD')}</p>
+            <p className="text-sm text-warm-gray">ইনভয়েস নং</p>
+            <p className="font-mono font-semibold">INV-{order.orderNumber.replace('KK-', '')}</p>
+          </div>
+        </div>
+
+        {/* Order Info */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <p className="text-sm font-medium text-forest mb-2">অর্ডারের তথ্য</p>
+            <div className="space-y-1 text-sm">
+              <p><span className="text-warm-gray">অর্ডার নং:</span> {order.orderNumber}</p>
+              <p><span className="text-warm-gray">তারিখ:</span> {new Date(order.createdAt).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <p><span className="text-warm-gray">সময়:</span> {new Date(order.createdAt).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' })}</p>
+            </div>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-forest mb-2">গ্রাহকের তথ্য</p>
+            <div className="space-y-1 text-sm">
+              <p><span className="text-warm-gray">নাম:</span> {order.customerName}</p>
+              <p><span className="text-warm-gray">ফোন:</span> {order.phone}</p>
+              {order.email && <p><span className="text-warm-gray">ইমেইল:</span> {order.email}</p>}
+              <p><span className="text-warm-gray">ঠিকানা:</span> {order.address}</p>
+              <p className="text-warm-gray">{order.district}, {order.division}</p>
+            </div>
           </div>
         </div>
 
         <hr className="border-light-border" />
 
+        {/* Payment Info */}
+        <div className="flex justify-between items-center text-sm">
+          <div>
+            <p><span className="text-warm-gray">পেমেন্ট পদ্ধতি:</span> {order.paymentMethod === 'cod' ? 'ক্যাশ অন ডেলিভারি' : order.paymentMethod}</p>
+            <p><span className="text-warm-gray">পেমেন্ট অবস্থা:</span> <span className={order.paymentStatus === 'paid' ? 'text-forest font-medium' : 'text-mustard font-medium'}>{order.paymentStatus === 'paid' ? 'পরিশোধিত' : 'অপেক্ষমান'}</span></p>
+          </div>
+          <div className="text-right">
+            <p><span className="text-warm-gray">অর্ডার অবস্থা:</span> <span className="text-forest font-medium">{order.orderStatus === 'pending' ? 'অপেক্ষমান' : order.orderStatus}</span></p>
+          </div>
+        </div>
+
+        <hr className="border-light-border" />
+
+        {/* Items */}
+        <div>
+          <p className="text-sm font-medium text-forest mb-3">পণ্যের বিবরণ</p>
+          <div className="space-y-3">
+            {order.items.map((item, idx) => (
+              <div key={idx} className="flex justify-between items-start text-sm pb-2 border-b border-light-border/50 last:border-0">
+                <div className="flex-1">
+                  <p className="font-medium">{item.product.nameBn}</p>
+                  {item.variant && <p className="text-xs text-warm-gray">{item.variant.nameBn}</p>}
+                  <p className="text-xs text-warm-gray">SKU: {item.product.sku}</p>
+                </div>
+                <div className="text-right ml-4">
+                  <p className="text-warm-gray">{item.quantity} × ৳{(item.product.price + (item.variant?.priceModifier || 0)).toLocaleString()}</p>
+                  <p className="font-semibold">৳{((item.product.price + (item.variant?.priceModifier || 0)) * item.quantity).toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <hr className="border-light-border" />
+
+        {/* Totals */}
         <div className="space-y-2 text-sm">
-          <p><span className="text-warm-gray">নাম:</span> {order.customerName}</p>
-          <p><span className="text-warm-gray">ফোন:</span> {order.phone}</p>
-          <p><span className="text-warm-gray">ঠিকানা:</span> {order.address}, {order.district}, {order.division}</p>
-          <p><span className="text-warm-gray">পেমেন্ট:</span> {order.paymentMethod === 'cod' ? 'ক্যাশ অন ডেলিভারি' : order.paymentMethod}</p>
-          <p><span className="text-warm-gray">অবস্থা:</span> <span className="text-forest font-medium">পেন্ডিং</span></p>
-        </div>
-
-        <hr className="border-light-border" />
-
-        <div className="space-y-2">
-          {order.items.map((item, idx) => (
-            <div key={idx} className="flex justify-between text-sm">
-              <span>{item.product.nameBn} × {item.quantity}</span>
-              <span>৳{((item.product.price + (item.variant?.priceModifier || 0)) * item.quantity).toLocaleString()}</span>
+          <div className="flex justify-between">
+            <span>সাবটোটাল</span>
+            <span>{formatPrice(order.subtotal)}</span>
+          </div>
+          {order.discount > 0 && (
+            <div className="flex justify-between text-forest">
+              <span>ছাড়</span>
+              <span>-{formatPrice(order.discount)}</span>
             </div>
-          ))}
+          )}
+          <div className="flex justify-between">
+            <span>ডেলিভারি চার্জ</span>
+            <span>{formatPrice(order.shippingFee)}</span>
+          </div>
+          <div className="flex justify-between font-bold text-lg pt-2 border-t border-light-border">
+            <span>সর্বমোট</span>
+            <span className="text-forest">{formatPrice(order.total)}</span>
+          </div>
         </div>
 
-        <hr className="border-light-border" />
-
-        <div className="space-y-1 text-sm">
-          <div className="flex justify-between"><span>সাবটোটাল</span><span>{formatPrice(order.subtotal)}</span></div>
-          {order.discount > 0 && <div className="flex justify-between text-forest"><span>ছাড়</span><span>-{formatPrice(order.discount)}</span></div>}
-          <div className="flex justify-between"><span>ডেলিভারি</span><span>{formatPrice(order.shippingFee)}</span></div>
-          <div className="flex justify-between font-bold text-lg mt-2"><span>মোট</span><span className="text-forest">{formatPrice(order.total)}</span></div>
+        {/* Footer */}
+        <div className="border-t border-light-border pt-4 text-center text-xs text-warm-gray">
+          <p>এই ইনভয়েস কম্পিউটার দিয়ে তৈরি করা হয়েছে</p>
+          <p>কারুকথা | {storeSettings.contactEmail} | ঢাকা, বাংলাদেশ</p>
         </div>
       </div>
 
+      {/* Download Actions */}
+      <div className="mt-6 space-y-3">
+        <p className="text-sm font-medium text-forest">ইনভয়েস ডাউনলোড করুন</p>
+        <div className="grid sm:grid-cols-3 gap-3">
+          <button
+            onClick={handleDownloadPNG}
+            disabled={isDownloading !== null}
+            className="bg-forest text-white py-3 px-4 rounded font-medium hover:bg-forest-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px]"
+          >
+            {isDownloading === 'png' ? (
+              <>
+                <span className="spinner" /> ডাউনলোড হচ্ছে...
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                PNG ডাউনলোড (3×)
+              </>
+            )}
+          </button>
+          <button
+            onClick={handleDownloadPDF}
+            disabled={isDownloading !== null}
+            className="border border-forest text-forest py-3 px-4 rounded font-medium hover:bg-cream transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px]"
+          >
+            {isDownloading === 'pdf' ? (
+              <>
+                <span className="spinner" /> ডাউনলোড হচ্ছে...
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                PDF ডাউনলোড
+              </>
+            )}
+          </button>
+          <button
+            onClick={handlePrint}
+            className="border border-light-border text-charcoal py-3 px-4 rounded font-medium hover:bg-cream transition-colors flex items-center justify-center gap-2 min-h-[48px]"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            প্রিন্ট করুন
+          </button>
+        </div>
+      </div>
+
+      {/* Navigation */}
       <div className="flex gap-3 mt-6">
-        <Link to="/shop" className="flex-1 text-center border border-forest text-forest py-3 rounded font-medium hover:bg-cream transition-colors">
+        <Link to="/shop" className="flex-1 text-center border border-forest text-forest py-3 rounded font-medium hover:bg-cream transition-colors min-h-[48px] flex items-center justify-center">
           আরও কিনুন
         </Link>
-        <Link to="/" className="flex-1 text-center bg-forest text-white py-3 rounded font-medium hover:bg-forest-light transition-colors">
+        <Link to="/" className="flex-1 text-center bg-forest text-white py-3 rounded font-medium hover:bg-forest-light transition-colors min-h-[48px] flex items-center justify-center">
           হোমে ফিরে যান
         </Link>
+      </div>
+
+      {/* Security Notice */}
+      <div className="mt-6 p-4 bg-cream rounded-lg text-xs text-warm-gray">
+        <p className="font-medium text-charcoal mb-1">নিরাপত্তা নোটিশ:</p>
+        <p>এই ইনভয়েস আপনার অর্ডারের তথ্য দেখায়। ইনভয়েস ডাউনলোড আপনার ডিভাইসে সংরক্ষিত হবে। প্রয়োজনে প্রিন্ট করে রাখুন।</p>
       </div>
     </div>
   );
