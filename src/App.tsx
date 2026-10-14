@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, useParams, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useParams, Link, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { HomePage } from './pages/Home';
 import { ShopPage } from './pages/Shop';
@@ -12,6 +12,37 @@ import { AdminLoginPage, AdminDashboard } from './pages/Admin';
 import { OrderTrackingPage } from './pages/OrderTracking';
 import { categories, products } from './data';
 import { ProductCard } from './components/ProductComponents';
+
+// Scroll to top on route change
+const ScrollToTop: React.FC = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    // If there's a hash, scroll to that element
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        // Use requestAnimationFrame to ensure DOM is ready
+        requestAnimationFrame(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        return;
+      }
+    }
+    
+    // Otherwise scroll to top
+    // Use requestAnimationFrame to ensure content is painted
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto' // Instant scroll, not smooth
+      });
+    });
+  }, [pathname, hash]);
+
+  return null;
+};
 
 // Category page component
 const CategoryPageComponent: React.FC = () => {
@@ -54,6 +85,7 @@ const CategoryPageComponent: React.FC = () => {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* Admin routes (no layout) */}
         <Route path="/admin/login" element={<AdminLoginPage />} />
