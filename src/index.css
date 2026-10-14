@@ -20,6 +20,10 @@
 
 * { box-sizing: border-box; }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   overflow-x: hidden;
   max-width: 100%;
@@ -30,6 +34,25 @@ body {
   background-color: var(--color-ivory);
   color: var(--color-charcoal);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Scroll margin for sticky header */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 #root {

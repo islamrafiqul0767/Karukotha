@@ -451,25 +451,102 @@ export const Footer: React.FC = () => {
           {/* Quick Links */}
           <div>
             <h4 className="font-semibold mb-3">দ্রুত লিংক</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link to="/shop" className="hover:text-white transition-colors">শপ</Link></li>
-              <li><Link to="/offers" className="hover:text-white transition-colors">অফার</Link></li>
-              <li><Link to="/blog" className="hover:text-white transition-colors">ব্লগ</Link></li>
-              <li><Link to="/about" className="hover:text-white transition-colors">আমাদের কথা</Link></li>
-              <li><Link to="/contact" className="hover:text-white transition-colors">যোগাযোগ</Link></li>
+            <ul className="space-y-1 text-sm text-gray-400">
+              <li>
+                <Link 
+                  to="/shop" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  শপ
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/offers" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  অফার
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/blog" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  ব্লগ
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/about" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  আমাদের কথা
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/contact" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  যোগাযোগ
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Customer Service */}
           <div>
             <h4 className="font-semibold mb-3">গ্রাহক সেবা</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link to="/faq" className="hover:text-white transition-colors">প্রশ্নোত্তর</Link></li>
-              <li><Link to="/shipping" className="hover:text-white transition-colors">ডেলিভারি তথ্য</Link></li>
-              <li><Link to="/returns" className="hover:text-white transition-colors">রিটার্ন পলিসি</Link></li>
-              <li><Link to="/order-tracking" className="hover:text-white transition-colors">অর্ডার ট্র্যাকিং</Link></li>
-              <li><Link to="/privacy" className="hover:text-white transition-colors">গোপনীয়তা নীতি</Link></li>
-              <li><Link to="/terms" className="hover:text-white transition-colors">শর্তাবলী</Link></li>
+            <ul className="space-y-1 text-sm text-gray-400">
+              <li>
+                <Link 
+                  to="/faq" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  প্রশ্নোত্তর
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/shipping" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  ডেলিভারি তথ্য
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/returns" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  রিটার্ন পলিসি
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/order-tracking" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  অর্ডার ট্র্যাকিং
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/privacy" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  গোপনীয়তা নীতি
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/terms" 
+                  className="flex items-center min-h-[44px] px-2 -mx-2 rounded hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  শর্তাবলী
+                </Link>
+              </li>
             </ul>
           </div>
 
