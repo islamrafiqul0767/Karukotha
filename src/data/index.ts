@@ -150,10 +150,10 @@ const REAL_IMAGES: Record<string, string> = {
   'p027': 'https://image.qwenlm.ai/generated-images/29f3389f-9056-49e7-accd-6ec5c8993fc1/_result.png', // wooden jewelry box
   'p028': 'https://image.qwenlm.ai/generated-images/3562484e-2314-4ce8-955d-bb13d5967940/_result.png', // rickshaw art frame
   
-  // Unsplash Reference Images (development preview only)
+  // Unsplash Reference Images (development preview only) - All unique URLs
   'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // laundry basket
   'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // serving tray
-  'p005': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // desk organizer
+  'p005': `${UNSPLASH_BASE}/photo-1519710164239-da12376166fa${IMG_PARAMS}`, // desk organizer (unique)
   'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // hand fan
   'p007': `${UNSPLASH_BASE}/photo-1586802005224-03286636cbca${IMG_PARAMS}`, // tissue box cover
   'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // shokher hari
@@ -162,11 +162,11 @@ const REAL_IMAGES: Record<string, string> = {
   'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag
   'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter
   'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner
-  'p018': `${UNSPLASH_BASE}/photo-1620799139507-2a76f79a2f4d${IMG_PARAMS}`, // bed runner
+  'p018': `${UNSPLASH_BASE}/photo-1555685812-4b943f1cb3eb${IMG_PARAMS}`, // bed runner (textile, unique)
   'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // kantha tote
   'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch
   'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat
-  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // shital pati tote
+  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // shital pati tote (unique from p005)
   'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger
   'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray
   'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal
