@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Heart, ShoppingBag, Minus, Plus, Truck, RotateCcw, Shield, Star, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, ShoppingBag, Minus, Plus, Truck, RotateCcw, Shield, Star, ChevronRight, Package, Check } from 'lucide-react';
 import { ProductGallery, ProductCard } from '../components/ProductComponents';
 import { getProductBySlug, getProductsByCategory, categories, formatPrice, translateMaterialsBn, translateCraftBn, formatDimensionsBn, formatWeightBn } from '../data';
 import { useCartStore, useWishlistStore, useUIStore } from '../store';
+import { fadeInUp, staggerContainer, staggerItem, pageTransition } from '../utils/animations';
 
 export const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -54,29 +55,33 @@ export const ProductDetailPage: React.FC = () => {
     : 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <motion.div 
+      className="max-w-7xl mx-auto px-4 py-8"
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+    >
       {/* Breadcrumb */}
-      <nav className="text-sm text-warm-gray mb-6 flex items-center flex-wrap gap-1">
-        <Link to="/" className="hover:text-forest">হোম</Link>
+      <motion.nav variants={fadeInUp} className="text-sm text-warm-gray mb-6 flex items-center flex-wrap gap-1">
+        <Link to="/" className="hover:text-forest transition-colors">হোম</Link>
         <ChevronRight size={12} />
-        <Link to="/shop" className="hover:text-forest">শপ</Link>
+        <Link to="/shop" className="hover:text-forest transition-colors">শপ</Link>
         <ChevronRight size={12} />
-        {category && <><Link to={`/category/${category.slug}`} className="hover:text-forest">{category.nameBn}</Link><ChevronRight size={12} /></>}
+        {category && <><Link to={`/category/${category.slug}`} className="hover:text-forest transition-colors">{category.nameBn}</Link><ChevronRight size={12} /></>}
         <span className="text-charcoal truncate">{product.nameBn}</span>
-      </nav>
+      </motion.nav>
 
       {/* Main Product Section */}
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Gallery */}
-        <div>
+        <motion.div variants={fadeInUp}>
           <ProductGallery product={product} />
-        </div>
+        </motion.div>
 
         {/* Product Info */}
-        <div className="space-y-6">
+        <motion.div className="space-y-6" variants={staggerContainer}>
           {/* Title & Rating */}
-          <div>
-
+          <motion.div variants={fadeInUp}>
             <h1 className="text-2xl md:text-3xl font-bold text-forest mb-2">{product.nameBn}</h1>
             <p className="text-sm text-warm-gray">{product.nameEn}</p>
             <div className="flex items-center gap-3 mt-2">
@@ -88,7 +93,7 @@ export const ProductDetailPage: React.FC = () => {
               <span className="text-sm text-warm-gray">({product.reviewCount} রিভিউ)</span>
               <span className="text-sm text-warm-gray">SKU: {product.sku}</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Price */}
           <div className="flex items-baseline gap-3">
@@ -227,7 +232,7 @@ export const ProductDetailPage: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Tabs Section */}
@@ -294,6 +299,6 @@ export const ProductDetailPage: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };

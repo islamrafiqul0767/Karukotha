@@ -112,9 +112,25 @@ export const generateInvoicePNG = async (invoiceData: InvoiceData, scale: number
   
   if (!ctx) throw new Error('Canvas context not available');
   
-  // A4 dimensions at 3x scale (2480 x 3508 pixels at 300 DPI)
+  // Wait for fonts to load for proper Bengali rendering
+  if (document.fonts && document.fonts.ready) {
+    await document.fonts.ready;
+  }
+  
+  // A4 width at 3x scale (2480 pixels at 300 DPI)
   const width = 2480;
-  const height = 3508;
+  
+  // Calculate dynamic height based on number of items
+  // Base height for header, customer info, totals, footer
+  const baseHeight = 900;
+  // Each item row takes approximately 60px
+  const itemHeight = 65;
+  const totalItemsHeight = invoiceData.items.length * itemHeight;
+  const calculatedHeight = baseHeight + totalItemsHeight;
+  
+  // Use A4 height or calculated height, whichever is larger
+  const height = Math.max(3508, calculatedHeight);
+  
   canvas.width = width;
   canvas.height = height;
   
@@ -217,8 +233,6 @@ export const generateInvoicePNG = async (invoiceData: InvoiceData, scale: number
   ctx.font = '20px "Hind Siliguri", sans-serif';
   
   invoiceData.items.forEach((item, idx) => {
-    if (yPos > actualHeight - 400) return; // Prevent overflow
-    
     // Alternate row background
     if (idx % 2 === 0) {
       ctx.fillStyle = '#F7F4ED';
@@ -227,22 +241,47 @@ export const generateInvoicePNG = async (invoiceData: InvoiceData, scale: number
     
     ctx.fillStyle = '#2C2C2C';
     ctx.textAlign = 'left';
-    ctx.fillText(item.name, 80, yPos + 25);
+    
+    // Handle long product names with text wrapping
+    const maxWidth = 1200; // Space for product name before quantity column
+    const words = item.name.split(' ');
+    let line = '';
+    let lineY = yPos + 25;
+    
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + ' ';
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && i > 0) {
+        ctx.fillText(line, 80, lineY);
+        line = words[i] + ' ';
+        lineY += 22;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line, 80, lineY);
+    
+    // Draw variant if exists
     if (item.variant) {
       ctx.font = '16px "Hind Siliguri", sans-serif';
       ctx.fillStyle = '#566257';
-      ctx.fillText(item.variant, 80, yPos + 48);
+      ctx.fillText(item.variant, 80, lineY + 20);
       ctx.font = '20px "Hind Siliguri", sans-serif';
       ctx.fillStyle = '#2C2C2C';
     }
     
+    // Quantity
     ctx.textAlign = 'center';
     ctx.fillText(item.quantity.toString(), 1400, yPos + 35);
-    ctx.fillText(`৳${item.unitPrice.toLocaleString()}`, 1700, yPos + 35);
-    ctx.textAlign = 'right';
-    ctx.fillText(`৳${item.total.toLocaleString()}`, actualWidth - 80, yPos + 35);
     
-    yPos += 60;
+    // Unit price
+    ctx.fillText(`৳${item.unitPrice.toLocaleString('bn-BD')}`, 1700, yPos + 35);
+    
+    // Line total
+    ctx.textAlign = 'right';
+    ctx.fillText(`৳${item.total.toLocaleString('bn-BD')}`, actualWidth - 80, yPos + 35);
+    
+    yPos += 65;
   });
   
   // Totals

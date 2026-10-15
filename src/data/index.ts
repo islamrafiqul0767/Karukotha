@@ -139,34 +139,34 @@ const IMG_PARAMS = '?w=800&h=800&fit=crop&auto=format&q=80';
 
 const REAL_IMAGES: Record<string, string> = {
   // AI-Generated Concept Images (clearly marked for development preview)
-  'p001': 'https://image.qwenlm.ai/generated-images/f8908c69-4f99-4489-8ac5-b855f19e8a2a/_result.png', // cane basket
-  'p004': 'https://image.qwenlm.ai/generated-images/660024d2-72d9-4205-b1d7-3ad71d131360/_result.png', // bamboo lampshade
-  'p008': 'https://image.qwenlm.ai/generated-images/3495a90f-08b5-44bc-a9ba-ee72e3b40380/_result.png', // terracotta pot
-  'p010': 'https://image.qwenlm.ai/generated-images/e9dc11b1-3291-43f8-9a6d-413add0bc3f9/_result.png', // clay tea cup set
-  'p013': 'https://image.qwenlm.ai/generated-images/8ea4c7bb-f356-422c-b476-3e62fea17adc/_result.png', // jute tote bag
-  'p017': 'https://image.qwenlm.ai/generated-images/bc22edd4-0617-4aed-8a27-c9c7ca4f18eb/_result.png', // nakshi kantha cushion
-  'p021': 'https://image.qwenlm.ai/generated-images/4023a9ce-d046-45bb-87f4-7e5dc015f6de/_result.png', // shital pati mat
-  'p024': 'https://image.qwenlm.ai/generated-images/acc1db42-6582-4a0d-b40e-61517572ad83/_result.png', // crochet coasters
-  'p027': 'https://image.qwenlm.ai/generated-images/29f3389f-9056-49e7-accd-6ec5c8993fc1/_result.png', // wooden jewelry box
-  'p028': 'https://image.qwenlm.ai/generated-images/3562484e-2314-4ce8-955d-bb13d5967940/_result.png', // rickshaw art frame
+  'p001': 'https://image.qwenlm.ai/generated-images/f963b08a-4377-4631-afaa-c1a8050aa180/_result.png', // cane basket
+  'p002': 'https://image.qwenlm.ai/generated-images/6d6a8bc5-80be-412d-9904-0b6d2a19cdb1/_result.png', // bamboo laundry basket
+  'p003': 'https://image.qwenlm.ai/generated-images/82210608-52bb-4456-81cc-9d50c30427e6/_result.png', // cane serving tray
+  'p004': 'https://image.qwenlm.ai/generated-images/241d0ae4-264f-4945-af3e-efa392791f8d/_result.png', // bamboo lampshade
+  'p008': 'https://image.qwenlm.ai/generated-images/9027c3bc-a100-4cfa-a7c9-25217d2146d0/_result.png', // terracotta pot
+  'p009': 'https://image.qwenlm.ai/generated-images/d0cbdbb5-2a53-44fe-ae38-215e9a307f15/_result.png', // shokher hari
+  'p010': 'https://image.qwenlm.ai/generated-images/560ef3a3-1335-4191-a7bb-2f141246a576/_result.png', // clay tea cup set
+  'p011': 'https://image.qwenlm.ai/generated-images/e3cc3e79-b100-4edb-a4e0-d50e70c823e5/_result.png', // candle holder
+  'p012': 'https://image.qwenlm.ai/generated-images/7e94d128-c6c8-4786-8aa9-42652c9d12ed/_result.png', // clay vase
+  'p013': 'https://image.qwenlm.ai/generated-images/ee3c4704-632e-4651-85f1-16fe9c1b2c98/_result.png', // jute tote bag
+  'p014': 'https://image.qwenlm.ai/generated-images/b8bc5a53-bd36-471f-8a50-ec03f4d53061/_result.png', // jute shopping bag
+  'p016': 'https://image.qwenlm.ai/generated-images/1174efd9-3d80-484c-9e67-b25ce715d768/_result.png', // jute table runner
+  'p017': 'https://image.qwenlm.ai/generated-images/6985a8a9-95a6-48de-aa20-ed8c681c678b/_result.png', // nakshi kantha cushion
+  'p018': 'https://image.qwenlm.ai/generated-images/e3477494-ee1f-42a9-8fba-bedc64f0ae5d/_result.png', // nakshi kantha bed runner
+  'p019': 'https://image.qwenlm.ai/generated-images/63fd4e63-cb43-466b-a58b-2c5a1e16b347/_result.png', // kantha tote bag
+  'p021': 'https://image.qwenlm.ai/generated-images/377dd229-c14f-4ca0-b896-7b08f89666fb/_result.png', // shital pati mat
+  'p024': 'https://image.qwenlm.ai/generated-images/961ac29f-d3e0-4239-af7d-d2dda0e678b1/_result.png', // crochet coasters
+  'p027': 'https://image.qwenlm.ai/generated-images/066f3e04-c080-46ca-bb60-879c3239fe4c/_result.png', // wooden jewelry box
+  'p028': 'https://image.qwenlm.ai/generated-images/b6c0bafe-b793-4938-af82-c3c29759e075/_result.png', // rickshaw art frame
   
-  // Unsplash Reference Images (development preview only) - All unique URLs
-  'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // laundry basket
-  'p003': `${UNSPLASH_BASE}/photo-1626037235530-fe56de7d6459${IMG_PARAMS}`, // serving tray
-  'p005': `${UNSPLASH_BASE}/photo-1519710164239-da12376166fa${IMG_PARAMS}`, // desk organizer (unique)
+  // Remaining Unsplash Reference Images (development preview only)
+  'p005': `${UNSPLASH_BASE}/photo-1519710164239-da12376166fa${IMG_PARAMS}`, // desk organizer
   'p006': `${UNSPLASH_BASE}/photo-1455669175216-9017c9b02fc6${IMG_PARAMS}`, // hand fan
   'p007': `${UNSPLASH_BASE}/photo-1586802005224-03286636cbca${IMG_PARAMS}`, // tissue box cover
-  'p009': `${UNSPLASH_BASE}/photo-1578500494198-246f612d3b3d${IMG_PARAMS}`, // shokher hari
-  'p011': `${UNSPLASH_BASE}/photo-1602874801006-e26c0477f4d1${IMG_PARAMS}`, // candle holder
-  'p012': `${UNSPLASH_BASE}/photo-1584622650111-993a426fbf0a${IMG_PARAMS}`, // clay vase
-  'p014': `${UNSPLASH_BASE}/photo-1591085686350-798c0f9faa7f${IMG_PARAMS}`, // shopping bag
   'p015': `${UNSPLASH_BASE}/photo-1485955900006-10f4d324d411${IMG_PARAMS}`, // planter
-  'p016': `${UNSPLASH_BASE}/photo-1616046229478-9901c5536a45${IMG_PARAMS}`, // table runner
-  'p018': `${UNSPLASH_BASE}/photo-1555685812-4b943f1cb3eb${IMG_PARAMS}`, // bed runner (textile, unique)
-  'p019': `${UNSPLASH_BASE}/photo-1590739225287-bfc1bb41460d${IMG_PARAMS}`, // kantha tote
   'p020': `${UNSPLASH_BASE}/photo-1584917865442-de89df76afd3${IMG_PARAMS}`, // pouch
   'p022': `${UNSPLASH_BASE}/photo-1616627577385-5c0c4dab04de${IMG_PARAMS}`, // placemat
-  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // shital pati tote (unique from p005)
+  'p023': `${UNSPLASH_BASE}/photo-1544816155-12df9643f363${IMG_PARAMS}`, // shital pati tote
   'p025': `${UNSPLASH_BASE}/photo-1615486363973-f79d843460a2${IMG_PARAMS}`, // plant hanger
   'p026': `${UNSPLASH_BASE}/photo-1558618666-fcd25c85f82e${IMG_PARAMS}`, // wooden tray
   'p029': `${UNSPLASH_BASE}/photo-1531346878377-a5be20888e57${IMG_PARAMS}`, // journal

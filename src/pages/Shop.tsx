@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { ProductCard } from '../components/ProductComponents';
 import { products, categories } from '../data';
+import { fadeInUp, staggerContainer, pageTransition } from '../utils/animations';
 
 export const ShopPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,13 +63,18 @@ export const ShopPage: React.FC = () => {
     'সকল পণ্য';
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <motion.div 
+      className="max-w-7xl mx-auto px-4 py-8"
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+    >
       {/* Breadcrumb */}
-      <nav className="text-sm text-warm-gray mb-6">
-        <Link to="/" className="hover:text-forest">হোম</Link>
+      <motion.nav variants={fadeInUp} className="text-sm text-warm-gray mb-6">
+        <Link to="/" className="hover:text-forest transition-colors">হোম</Link>
         <span className="mx-2">/</span>
         <span className="text-charcoal">{pageTitle}</span>
-      </nav>
+      </motion.nav>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -222,7 +229,7 @@ export const ShopPage: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

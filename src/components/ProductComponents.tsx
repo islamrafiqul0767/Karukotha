@@ -183,23 +183,29 @@ export const ProductGallery: React.FC<{ product: Product }> = ({ product }) => {
           className="w-full h-full object-cover"
           onError={(e) => { (e.target as HTMLImageElement).src = '/assets/brand/image-pending.svg'; }}
         />
-        {/* Navigation Arrows */}
-        <button
-          onClick={e => { e.stopPropagation(); handlePrev(); }}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors"
-        >
-          <span className="text-lg">‹</span>
-        </button>
-        <button
-          onClick={e => { e.stopPropagation(); handleNext(); }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors"
-        >
-          <span className="text-lg">›</span>
-        </button>
-        {/* Image counter */}
-        <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-          {activeIndex + 1} / {images.length}
-        </div>
+        {/* Navigation Arrows - Only show if multiple images */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={e => { e.stopPropagation(); handlePrev(); }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label="পূর্ববর্তী ছবি"
+            >
+              <span className="text-lg">‹</span>
+            </button>
+            <button
+              onClick={e => { e.stopPropagation(); handleNext(); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label="পরবর্তী ছবি"
+            >
+              <span className="text-lg">›</span>
+            </button>
+            {/* Image counter */}
+            <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+              {activeIndex + 1} / {images.length}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Thumbnails */}
@@ -219,16 +225,22 @@ export const ProductGallery: React.FC<{ product: Product }> = ({ product }) => {
 
       {/* Lightbox */}
       {isLightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setIsLightboxOpen(false)}>
-          <button className="absolute top-4 right-4 text-white p-2" onClick={() => setIsLightboxOpen(false)}>✕</button>
-          <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white p-3 bg-white/10 rounded-full hover:bg-white/20"
-            onClick={e => { e.stopPropagation(); handlePrev(); }}
-          >‹</button>
-          <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white p-3 bg-white/10 rounded-full hover:bg-white/20"
-            onClick={e => { e.stopPropagation(); handleNext(); }}
-          >›</button>
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setIsLightboxOpen(false)} role="dialog" aria-modal="true" aria-label="ছবি গ্যালারি">
+          <button className="absolute top-4 right-4 text-white p-3 min-w-[44px] min-h-[44px] flex items-center justify-center" onClick={() => setIsLightboxOpen(false)} aria-label="গ্যালারি বন্ধ করুন">✕</button>
+          {images.length > 1 && (
+            <>
+              <button
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white p-3 bg-white/10 rounded-full hover:bg-white/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                onClick={e => { e.stopPropagation(); handlePrev(); }}
+                aria-label="পূর্ববর্তী ছবি"
+              >‹</button>
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white p-3 bg-white/10 rounded-full hover:bg-white/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                onClick={e => { e.stopPropagation(); handleNext(); }}
+                aria-label="পরবর্তী ছবি"
+              >›</button>
+            </>
+          )}
           <motion.img
             key={activeIndex}
             initial={{ opacity: 0, scale: 0.9 }}
