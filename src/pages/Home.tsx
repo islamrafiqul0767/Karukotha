@@ -5,6 +5,7 @@ import { ArrowRight, Truck, Shield, Leaf, Award } from 'lucide-react';
 import { useState } from 'react';
 import { ProductCard } from '../components/ProductComponents';
 import { categories, getFeaturedProducts, getNewArrivals, getBestSellers, getActiveOffers, getPublishedBlogPosts, storeSettings } from '../data';
+import { fadeInUp, staggerContainer, staggerItem, pageTransition } from '../utils/animations';
 
 // Newsletter Form Component with proper states
 const NewsletterForm: React.FC = () => {
@@ -73,7 +74,11 @@ export const HomePage: React.FC = () => {
   const blogPosts = getPublishedBlogPosts().slice(0, 3);
 
   return (
-    <div>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+    >
       {/* HERO SECTION */}
       <section className="relative bg-cream overflow-hidden">
         <div className="absolute inset-0 opacity-5">
@@ -354,6 +359,6 @@ export const HomePage: React.FC = () => {
           <p className="text-xs text-white/50 mt-3">আমরা আপনার তথ্য গোপন রাখি। যেকোনো সময় আনসাবস্ক্রাইব করতে পারবেন।</p>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };

@@ -139,16 +139,16 @@ const IMG_PARAMS = '?w=800&h=800&fit=crop&auto=format&q=80';
 
 const REAL_IMAGES: Record<string, string> = {
   // AI-Generated Concept Images (clearly marked for development preview)
-  'p001': 'https://image.qwenlm.ai/generated-images/f8908c69-4f99-4489-8ac5-b855f19e8a2a/_result.png', // cane basket
-  'p004': 'https://image.qwenlm.ai/generated-images/660024d2-72d9-4205-b1d7-3ad71d131360/_result.png', // bamboo lampshade
-  'p008': 'https://image.qwenlm.ai/generated-images/3495a90f-08b5-44bc-a9ba-ee72e3b40380/_result.png', // terracotta pot
-  'p010': 'https://image.qwenlm.ai/generated-images/e9dc11b1-3291-43f8-9a6d-413add0bc3f9/_result.png', // clay tea cup set
-  'p013': 'https://image.qwenlm.ai/generated-images/8ea4c7bb-f356-422c-b476-3e62fea17adc/_result.png', // jute tote bag
-  'p017': 'https://image.qwenlm.ai/generated-images/bc22edd4-0617-4aed-8a27-c9c7ca4f18eb/_result.png', // nakshi kantha cushion
-  'p021': 'https://image.qwenlm.ai/generated-images/4023a9ce-d046-45bb-87f4-7e5dc015f6de/_result.png', // shital pati mat
-  'p024': 'https://image.qwenlm.ai/generated-images/acc1db42-6582-4a0d-b40e-61517572ad83/_result.png', // crochet coasters
-  'p027': 'https://image.qwenlm.ai/generated-images/29f3389f-9056-49e7-accd-6ec5c8993fc1/_result.png', // wooden jewelry box
-  'p028': 'https://image.qwenlm.ai/generated-images/3562484e-2314-4ce8-955d-bb13d5967940/_result.png', // rickshaw art frame
+  'p001': 'https://image.qwenlm.ai/generated-images/f963b08a-4377-4631-afaa-c1a8050aa180/_result.png', // cane basket
+  'p004': 'https://image.qwenlm.ai/generated-images/241d0ae4-264f-4945-af3e-efa392791f8d/_result.png', // bamboo lampshade
+  'p008': 'https://image.qwenlm.ai/generated-images/9027c3bc-a100-4cfa-a7c9-25217d2146d0/_result.png', // terracotta pot
+  'p010': 'https://image.qwenlm.ai/generated-images/560ef3a3-1335-4191-a7bb-2f141246a576/_result.png', // clay tea cup set
+  'p013': 'https://image.qwenlm.ai/generated-images/ee3c4704-632e-4651-85f1-16fe9c1b2c98/_result.png', // jute tote bag
+  'p017': 'https://image.qwenlm.ai/generated-images/6985a8a9-95a6-48de-aa20-ed8c681c678b/_result.png', // nakshi kantha cushion
+  'p021': 'https://image.qwenlm.ai/generated-images/377dd229-c14f-4ca0-b896-7b08f89666fb/_result.png', // shital pati mat
+  'p024': 'https://image.qwenlm.ai/generated-images/961ac29f-d3e0-4239-af7d-d2dda0e678b1/_result.png', // crochet coasters
+  'p027': 'https://image.qwenlm.ai/generated-images/066f3e04-c080-46ca-bb60-879c3239fe4c/_result.png', // wooden jewelry box
+  'p028': 'https://image.qwenlm.ai/generated-images/b6c0bafe-b793-4938-af82-c3c29759e075/_result.png', // rickshaw art frame
   
   // Unsplash Reference Images (development preview only) - All unique URLs
   'p002': `${UNSPLASH_BASE}/photo-1578678809626-a3741782f0b8${IMG_PARAMS}`, // laundry basket
