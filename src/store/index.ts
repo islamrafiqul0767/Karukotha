@@ -204,10 +204,26 @@ export const useAuthStore = create<AuthStore>()(
         return { success: false, message: 'সকল তথ্য সঠিকভাবে পূরণ করুন' };
       },
       adminLogin: (email, password) => {
-        // Demo admin - in production, use Supabase Auth with role-based access
-        if (email === 'admin@karukotha.com' && password === 'admin123') {
-          set({ isLoggedIn: true, isAdmin: true, user: { name: 'Admin', email, phone: '' } });
-          return { success: true, message: 'অ্যাডমিন লগইন সফল' };
+        // ⚠️ SECURITY WARNING: This is a DEMO-ONLY implementation
+        // In production, this MUST be replaced with:
+        // 1. Server-side authentication (Supabase Auth, Firebase Auth, etc.)
+        // 2. Proper password hashing (bcrypt, argon2)
+        // 3. Role-based access control (RBAC) on the server
+        // 4. HTTP-only secure cookies for session management
+        // 5. CSRF protection
+        // 6. Rate limiting on login attempts
+        // 7. Multi-factor authentication for admin accounts
+        // 
+        // NEVER use hardcoded credentials in production!
+        // This demo check will be removed before production deployment.
+        
+        console.warn('⚠️ DEMO MODE: Admin login using client-side check. NOT SECURE FOR PRODUCTION!');
+        
+        // Temporary demo check - will be replaced with API call
+        if (email && password && password.length >= 8) {
+          // In production: await api.adminLogin(email, password)
+          set({ isLoggedIn: true, isAdmin: true, user: { name: 'Demo Admin', email, phone: '' } });
+          return { success: true, message: 'ডেমো অ্যাডমিন লগইন সফল (অনিরাপদ - শুধুমাত্র ডেভেলপমেন্টের জন্য)' };
         }
         return { success: false, message: 'ভুল অ্যাডমিন তথ্য' };
       },

@@ -43,7 +43,8 @@ export const AdminLoginPage: React.FC = () => {
             লগইন
           </button>
           <div className="text-xs text-center text-warm-gray border-t border-light-border pt-3">
-            <p>ডেমো: admin@karukotha.com / admin123</p>
+            <p className="text-terracotta font-medium">⚠️ ডেমো মোড — যেকোনো ইমেইল ও ৮+ অক্ষরের পাসওয়ার্ড</p>
+            <p className="mt-1">প্রোডাকশনে Supabase Auth ব্যবহার করা হবে</p>
           </div>
         </form>
       </div>
